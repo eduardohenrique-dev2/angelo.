@@ -228,3 +228,14 @@ body.light .ticker{color:#fff!important}
 @media(max-width:760px){.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.service-card{min-height:310px;padding:18px;grid-template-rows:auto 90px auto}.service-card>div{min-height:115px}.service-card h3{font-size:17px}.service-card p{font-size:13px}.footer{grid-template-columns:1fr}.footer-bottom{grid-column:1}.mobile-nav .menu-inner{padding-top:20px}}
 @media(max-width:380px){.service-grid{grid-template-columns:1fr}.service-card{min-height:205px;grid-template-columns:1fr 90px;grid-template-rows:auto 1fr;align-items:center}.service-card svg{grid-row:1/3;grid-column:2}.service-card>div{grid-column:1;grid-row:2;min-height:0}.service-card h3{min-height:0}.floating-whatsapp span{display:none}.floating-whatsapp{width:50px;padding:0;justify-content:center}.hero-brand-composition{padding-inline:10px}}
 @media(prefers-reduced-motion:reduce){.mobile-nav .menu-inner>a,.mobile-nav,.project,.floating-whatsapp{transition:none!important;transform:none!important;animation:none!important}}
+
+/* Keep a balanced 2x2 service grid even at narrow 320px viewports. */
+@media(max-width:380px){
+ .service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .service-card{display:grid;grid-template-columns:minmax(0,1fr);grid-template-rows:auto 63px minmax(150px,1fr);min-height:270px;padding:13px;gap:10px}
+ .service-card .card-index{grid-column:1;grid-row:1;font-size:11px}
+ .service-card svg{grid-column:1;grid-row:2;width:54px;height:54px;justify-self:center;margin:0}
+ .service-card>div{grid-column:1;grid-row:3;min-height:0}
+ .service-card h3{font-size:15px;min-height:36px;hyphens:auto;overflow-wrap:anywhere}
+ .service-card p{font-size:12px;line-height:1.5}
+}
