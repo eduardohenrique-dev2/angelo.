@@ -76,3 +76,64 @@ Substitua os blocos de espera de `#cases` por projetos **finalizados e autorizad
 3. Tente enviar briefing vazio para ver os erros; preencha e confira a mensagem antes de enviar pelo WhatsApp.
 4. Filtre os projetos e confira a navegação pelo teclado e no celular.
 5. Configure `SITE_URL`, execute `npm run build` e confira `dist/sitemap.xml`.
+
+
+## V7 — refinamento geral de interface (27/10/2026)
+
+**Stack:** Vite + JavaScript modular + CSS próprio com design tokens. Mantida para não introduzir um framework de aplicação desnecessário em uma landing page estática.
+
+### Mudanças
+- CTAs principais com fundo azul forte e **texto branco**; marquee com texto branco.
+- Microrótulos com tipografia maior, melhor contraste e tracking controlado.
+- Ritmo vertical harmonizado; cards de serviços alinhados inclusive no grid 2×2 a 320px.
+- Hero centralizado, com moldura interna consistente.
+- Hierarquia do portfólio, estados hover/tap e estado vazio preservados.
+- Selects nativos redesenhados visualmente (seta SVG e estados de foco, erro e desabilitado), mantendo acessibilidade e teclado.
+- Contador de caracteres visível no briefing (0/500), validação inline, toast, feedback transitório de envio.
+- Menu de oito itens em tela cheia com stagger, fechamento por Esc e fundo, foco gerenciado.
+- Rodapé completo, atalho flutuante para WhatsApp, suporte a redução de movimentos e preflight de tema para evitar flash.
+- O tom de voz, os projetos **conceituais** e a explicação de que as faixas não são preços continuam preservados.
+
+### Projeto editável
+
+```text
+index.html
+src/main.js
+src/style.css
+public/links.html
+public/logo.svg
+public/logo-light.svg
+public/favicon.svg
+public/og-cover.svg
+scripts/generate-seo.mjs
+scripts/build-standalone.mjs
+package.json
+vite.config.js
+```
+
+### Comandos
+
+```bash
+npm install
+npm run dev
+npm run build
+npm run preview
+```
+
+Após `npm run build`:
+- `dist/index.html`: página Vite de produção;
+- `dist/standalone.html`: arquivo único com JS/CSS embutidos, para abrir localmente;
+- `dist/links.html`: página separada do portal de bio.
+
+Fontes do Google e ícones Bootstrap seguem via CDN e precisam de internet para aparência completa. Links para `links.html` requerem esse arquivo ao lado do standalone.
+
+### Testes antes de publicar
+
+1. Testar larguras 320, 375, 390, 768, 1024 e 1440 px.
+2. Verificar menu com Tab, Shift+Tab, Esc e clique no backdrop.
+3. Verificar contraste dos botões e marquee nos dois temas.
+4. Testar filtros, campos vazios, contador em 500 caracteres e redirecionamento WhatsApp sem envio automático.
+5. Rodar `npm run build`, Lighthouse e auditoria de contraste no navegador.
+6. Configurar `SITE_URL` na Vercel e fornecer projetos, métricas e depoimentos **reais e autorizados** antes de substituir estados de espera.
+
+**Limitação da validação atual:** as verificações de sintaxe/estrutura foram feitas; Lighthouse 90+ e visual em navegador físico não foram medidos aqui.
