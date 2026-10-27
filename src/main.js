@@ -1,8 +1,33 @@
 import './style.css';
 const menu=document.querySelector('#menu'),mobile=document.querySelector('#mobile-nav'),theme=document.querySelector('#theme');
 const icon=(name)=>'<i class="bi bi-'+name+'" aria-hidden="true"></i>';
-function setMenu(open){mobile.hidden=!open;menu.setAttribute('aria-expanded',String(open));menu.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');menu.innerHTML=icon(open?'x-lg':'list');document.body.classList.toggle('menu-open',open);}
-menu.addEventListener('click',()=>setMenu(mobile.hidden));mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!mobile.hidden){setMenu(false);menu.focus();}if(e.key==='Tab'&&!mobile.hidden){const focusable=[menu,...mobile.querySelectorAll('a')];const i=focusable.indexOf(document.activeElement);if(e.shiftKey&&i===0){e.preventDefault();focusable.at(-1).focus();}else if(!e.shiftKey&&i===focusable.length-1){e.preventDefault();menu.focus();}}});
+const backdrop=document.querySelector('#menu-backdrop');
+let menuWasOpen=false;
+function setMenu(open,{restoreFocus=false}={}){
+  if(open===menuWasOpen)return;
+  menuWasOpen=open;
+  menu.setAttribute('aria-expanded',String(open));
+  menu.setAttribute('aria-label',open?'Fechar menu':'Abrir menu');
+  menu.innerHTML=icon(open?'x-lg':'list');
+  document.body.classList.toggle('menu-open',open);
+  mobile.setAttribute('aria-hidden',String(!open));
+  mobile.inert=!open;
+  backdrop.setAttribute('aria-hidden',String(!open));
+  if(open){mobile.querySelector('a')?.focus({preventScroll:true});}
+  else if(restoreFocus){menu.focus({preventScroll:true});}
+}
+menu.addEventListener('click',()=>setMenu(!menuWasOpen,{restoreFocus:menuWasOpen}));
+backdrop.addEventListener('click',()=>setMenu(false,{restoreFocus:true}));
+mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+document.addEventListener('keydown',e=>{
+  if(!menuWasOpen)return;
+  if(e.key==='Escape'){e.preventDefault();setMenu(false,{restoreFocus:true});return;}
+  if(e.key!=='Tab')return;
+  const focusable=[menu,...mobile.querySelectorAll('a[href]')];
+  const current=focusable.indexOf(document.activeElement);
+  if(e.shiftKey&&(current===0||current<0)){e.preventDefault();focusable.at(-1).focus();}
+  else if(!e.shiftKey&&current===focusable.length-1){e.preventDefault();menu.focus();}
+});
 const getTheme=()=>{try{return localStorage.getItem('angelo-theme')}catch{return null}};
 const saveTheme=v=>{try{localStorage.setItem('angelo-theme',v)}catch{}};
 function setTheme(value){const light=value==='light';document.body.classList.toggle('light',light);document.querySelectorAll('.brand img').forEach(img=>{img.src=light?'/logo-light.svg':'/logo.svg'});theme.setAttribute('aria-label',light?'Ativar tema escuro':'Ativar tema claro');theme.innerHTML=icon(light?'moon-stars':'sun');document.querySelector('meta[name="theme-color"]').content=light?'#f6f8ff':'#10172d';}
