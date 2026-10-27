@@ -36,3 +36,37 @@ const filters=[...document.querySelectorAll('[data-filter]')],projects=[...docum
 document.querySelector('#year').textContent=new Date().getFullYear();
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const obs=new IntersectionObserver(entries=>entries.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}}),{threshold:.05});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
 addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('#progress').style.transform='scaleX('+(max>0?scrollY/max:0)+')';},{passive:true});
+
+/* V6: quote builder (client-side only, no personal data collected) */
+const quoteForm=document.querySelector('#quote-form');
+const toast=document.querySelector('#quote-toast');
+let toastTimer;
+const showToast=(message)=>{toast.textContent=message;toast.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{toast.hidden=true},4500)};
+if(quoteForm){
+ const fields=['service','budget','deadline'].map(name=>quoteForm.elements.namedItem(name));
+ fields.forEach(field=>field.addEventListener('change',()=>{field.setAttribute('aria-invalid','false');document.getElementById(field.id+'-error').textContent='';}));
+ quoteForm.addEventListener('submit',event=>{
+  event.preventDefault();
+  let firstInvalid=null;
+  fields.forEach(field=>{
+   const invalid=!field.value.trim();
+   field.setAttribute('aria-invalid',String(invalid));
+   document.getElementById(field.id+'-error').textContent=invalid?'Selecione uma opção para continuar.':'';
+   if(invalid&&!firstInvalid)firstInvalid=field;
+  });
+  if(firstInvalid){firstInvalid.focus();showToast('Preencha os três campos obrigatórios.');return;}
+  const description=quoteForm.elements.namedItem('description').value.trim();
+  const message=['Olá, Angelo Studio! Gostaria de conversar sobre um projeto.','','Serviço: '+fields[0].value,'Investimento previsto: '+fields[1].value,'Prazo desejado: '+fields[2].value,description?'Descrição: '+description:'','', 'Podemos conversar sobre o orçamento?'].filter((line,i)=>line!==''||i===1).join('\n');
+  const url='https://wa.me/5531997607544?text='+encodeURIComponent(message);
+  const opened=window.open(url,'_blank','noopener,noreferrer');
+  if(!opened){showToast('O navegador bloqueou a nova aba. Use o link de contato para continuar.');}
+  else showToast('Mensagem preparada. Confira os detalhes antes de enviar pelo WhatsApp.');
+ });
+}
+/* Magnetic pointer treatment: only fine pointers and reduced-motion off */
+const canMagnet=window.matchMedia('(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)').matches;
+if(canMagnet){document.querySelectorAll('.hero-actions .button,.contact-button,.quote-submit').forEach(button=>{
+ button.dataset.magnetic='';
+ button.addEventListener('pointermove',event=>{const r=button.getBoundingClientRect();const dx=(event.clientX-r.left-r.width/2)*.075;const dy=(event.clientY-r.top-r.height/2)*.075;button.style.transform='translate3d('+dx+'px,'+dy+'px,0)';});
+ button.addEventListener('pointerleave',()=>{button.style.transform='';});
+});}
