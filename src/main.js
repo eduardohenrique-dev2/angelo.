@@ -58,9 +58,8 @@ if(quoteForm){
   const description=quoteForm.elements.namedItem('description').value.trim();
   const message=['Olá, Angelo Studio! Gostaria de conversar sobre um projeto.','','Serviço: '+fields[0].value,'Investimento previsto: '+fields[1].value,'Prazo desejado: '+fields[2].value,description?'Descrição: '+description:'','', 'Podemos conversar sobre o orçamento?'].filter((line,i)=>line!==''||i===1).join('\n');
   const url='https://wa.me/5531997607544?text='+encodeURIComponent(message);
-  const opened=window.open(url,'_blank','noopener,noreferrer');
-  if(!opened){showToast('O navegador bloqueou a nova aba. Use o link de contato para continuar.');}
-  else showToast('Mensagem preparada. Confira os detalhes antes de enviar pelo WhatsApp.');
+  showToast('Abrindo WhatsApp. Confira a mensagem antes de enviar.');
+  window.location.assign(url);
  });
 }
 /* Magnetic pointer treatment: only fine pointers and reduced-motion off */
