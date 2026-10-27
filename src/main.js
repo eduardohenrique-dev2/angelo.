@@ -18,7 +18,7 @@ function setMenu(open,{restoreFocus=false}={}){
 }
 menu.addEventListener('click',()=>setMenu(!menuWasOpen,{restoreFocus:menuWasOpen}));
 backdrop.addEventListener('click',()=>setMenu(false,{restoreFocus:true}));
-mobile.querySelectorAll('a').forEach(a=>a.addEventListener('click',()=>setMenu(false)));
+mobile.querySelectorAll('a').forEach((a,index)=>{a.style.setProperty('--item-index',index);a.addEventListener('click',()=>setMenu(false));});
 document.addEventListener('keydown',e=>{
   if(!menuWasOpen)return;
   if(e.key==='Escape'){e.preventDefault();setMenu(false,{restoreFocus:true});return;}
@@ -39,12 +39,15 @@ addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-i
 
 /* V6: quote builder (client-side only, no personal data collected) */
 const quoteForm=document.querySelector('#quote-form');
+const descriptionField=document.querySelector('#quote-description');
+const charCounter=document.querySelector('#quote-counter');
+if(descriptionField&&charCounter){const refresh=()=>{const remaining=descriptionField.value.length;charCounter.textContent=remaining+' / 500 caracteres';charCounter.setAttribute('aria-label',remaining+' de 500 caracteres utilizados');};descriptionField.addEventListener('input',refresh);refresh();}
 const toast=document.querySelector('#quote-toast');
 let toastTimer;
 const showToast=(message)=>{toast.textContent=message;toast.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{toast.hidden=true},4500)};
 if(quoteForm){
  const fields=['service','budget','deadline'].map(name=>quoteForm.elements.namedItem(name));
- fields.forEach(field=>field.addEventListener('change',()=>{field.setAttribute('aria-invalid','false');document.getElementById(field.id+'-error').textContent='';}));
+ fields.forEach(field=>{field.setAttribute('aria-invalid','false');field.addEventListener('change',()=>{field.setAttribute('aria-invalid','false');document.getElementById(field.id+'-error').textContent='';});});
  quoteForm.addEventListener('submit',event=>{
   event.preventDefault();
   let firstInvalid=null;
@@ -58,8 +61,12 @@ if(quoteForm){
   const description=quoteForm.elements.namedItem('description').value.trim();
   const message=['Olá, Angelo Studio! Gostaria de conversar sobre um projeto.','','Serviço: '+fields[0].value,'Investimento previsto: '+fields[1].value,'Prazo desejado: '+fields[2].value,description?'Descrição: '+description:'','', 'Podemos conversar sobre o orçamento?'].filter((line,i)=>line!==''||i===1).join('\n');
   const url='https://wa.me/5531997607544?text='+encodeURIComponent(message);
-  showToast('Abrindo WhatsApp. Confira a mensagem antes de enviar.');
+  const submit=quoteForm.querySelector('#quote-submit');
+  submit.classList.add('is-loading');submit.disabled=true;submit.setAttribute('aria-busy','true');
+  showToast('Briefing pronto! Confira a mensagem no WhatsApp antes de enviar.');
+  // User-initiated navigation; no server receives the form before this action.
   window.location.assign(url);
+  window.setTimeout(()=>{submit.disabled=false;submit.classList.remove('is-loading');submit.removeAttribute('aria-busy');},1500);
  });
 }
 /* Magnetic pointer treatment: only fine pointers and reduced-motion off */
