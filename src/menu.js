@@ -104,7 +104,7 @@ export function initMenu() {
   closeButton.addEventListener('click', () => closeMenu({ restoreFocus: true }));
   backdrop.addEventListener('click', () => closeMenu({ restoreFocus: true }));
   dialog.addEventListener('click', event => {
-    if (event.target === dialog || event.target.classList.contains('menu-shell') || event.target.classList.contains('menu-scroll')) {
+    if (!event.target.closest('a, button, .menu-topbar, .menu-caption, .menu-links, .menu-bottom')) {
       closeMenu({ restoreFocus: true });
     }
   });
@@ -115,11 +115,11 @@ export function initMenu() {
         event.preventDefault();
         history.pushState(null, '', link.hash);
         setActive(target.id);
-        closeMenu({ restoreFocus: false, target });
+        closeMenu({ restoreFocus: true, target });
         return;
       }
     }
-    closeMenu({ restoreFocus: false });
+    closeMenu({ restoreFocus: true });
   }));
   dialog.addEventListener('keydown', event => {
     if (!open) return;
