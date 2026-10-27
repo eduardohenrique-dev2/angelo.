@@ -104,7 +104,7 @@ export function initMenu() {
   closeButton.addEventListener('click', () => closeMenu({ restoreFocus: true }));
   backdrop.addEventListener('click', () => closeMenu({ restoreFocus: true }));
   dialog.addEventListener('click', event => {
-    if (event.target === dialog || event.target.classList.contains('menu-shell')) {
+    if (event.target === dialog || event.target.classList.contains('menu-shell') || event.target.classList.contains('menu-scroll')) {
       closeMenu({ restoreFocus: true });
     }
   });
@@ -114,6 +114,7 @@ export function initMenu() {
       if (target) {
         event.preventDefault();
         history.pushState(null, '', link.hash);
+        setActive(target.id);
         closeMenu({ restoreFocus: false, target });
         return;
       }
