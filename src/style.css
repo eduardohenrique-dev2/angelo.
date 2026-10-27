@@ -44,3 +44,43 @@ body.light .brand img{filter:none}
 .menu-caption{margin-bottom:12px}
 .menu-bottom{padding:18px 4px}
 }
+
+/* V5.4 — off-canvas right sidebar, theme-aware navy surface */
+.menu-backdrop{
+ position:fixed;inset:0;z-index:48;border:0;border-radius:0;
+ background:rgba(4,9,24,.66);backdrop-filter:blur(5px);
+ opacity:0;visibility:hidden;pointer-events:none;
+ transition:opacity .3s ease,visibility .3s ease;
+}
+.menu-open .menu-backdrop{opacity:1;visibility:visible;pointer-events:auto}
+.mobile-nav{
+ position:fixed;inset:0 0 0 auto!important;
+ width:min(410px,90vw);height:100dvh;max-height:100dvh;
+ z-index:49;overflow-y:auto;overscroll-behavior:contain;
+ background:#101a35!important;color:#f5f7ff;
+ border-left:1px solid #354668;
+ box-shadow:-22px 0 75px #050b2259;
+ transform:translateX(105%);visibility:hidden;pointer-events:none;
+ transition:transform .38s cubic-bezier(.22,1,.36,1),visibility .38s;
+ padding:90px 0 20px!important;
+}
+.menu-open .mobile-nav{transform:translateX(0);visibility:visible;pointer-events:auto}
+.mobile-nav .menu-inner{width:calc(100% - 42px);max-width:none;margin:auto;padding:10px 0 24px}
+.mobile-nav .menu-caption{font-size:9px;color:#9eadd0;letter-spacing:1.35px;padding-bottom:18px;border-bottom:1px solid #33415d}
+.mobile-nav .menu-inner>a{color:#f5f7ff;font-size:clamp(26px,4vw,35px);min-height:65px;border-bottom:1px solid #354361;gap:15px;letter-spacing:-.05em}
+.mobile-nav .menu-number{color:#8aa3ff;font-size:11px;min-width:23px}
+.mobile-nav .menu-inner>a i{color:#9badd8;opacity:1;font-size:17px}
+.mobile-nav .menu-inner>a:hover,.mobile-nav .menu-inner>a:focus-visible{color:#a9baff}
+.mobile-nav .menu-bottom{color:#a4b2d1;font-size:10px;gap:12px}
+.mobile-nav .menu-bottom a{color:#fff}
+.menu-open .menu-button{background:#4261ff!important;border-color:#4261ff!important;color:white!important;position:relative;z-index:51}
+.menu-button{position:relative;z-index:51}
+body.light .mobile-nav{background:#131e3b!important;color:#fff}
+body.light .mobile-nav .menu-inner>a{color:#fff}
+@media(max-width:650px){
+ .mobile-nav{width:min(380px,92vw);padding-top:85px!important}
+ .mobile-nav .menu-inner>a{font-size:clamp(25px,7vw,32px);min-height:62px}
+}
+@media(prefers-reduced-motion:reduce){
+ .mobile-nav,.menu-backdrop{transition:none!important}
+}
