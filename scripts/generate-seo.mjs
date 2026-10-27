@@ -15,7 +15,7 @@ for(const file of ['dist/index.html','dist/links.html']){
  const pathname=file.endsWith('links.html')?'/links.html':'/';
  const canonical='<link rel="canonical" href="'+origin+pathname+'"/><meta property="og:url" content="'+origin+pathname+'"/>';
  html=html.replace('</head>',canonical+'</head>');
- html=html.replace(/content="\\/og-cover\\.svg"/g,'content="'+origin+'/og-cover.svg"');
+ html=html.split('content="/og-cover.svg"').join('content="'+origin+'/og-cover.svg"');
  writeFileSync(file,html);
 }
 writeFileSync('dist/robots.txt','User-agent: *\nAllow: /\nSitemap: '+origin+'/sitemap.xml\n');
