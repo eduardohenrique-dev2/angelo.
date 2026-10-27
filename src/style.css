@@ -84,3 +84,37 @@ body.light .mobile-nav .menu-inner>a{color:#fff}
 @media(prefers-reduced-motion:reduce){
  .mobile-nav,.menu-backdrop{transition:none!important}
 }
+
+/* Angelo Studio V6 — conversion, evidence and refined motion */
+.proposal{background:var(--bg)}
+.quote-layout{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(270px,.85fr);gap:18px;align-items:stretch}
+.quote-form{display:grid;gap:18px;padding:clamp(22px,4vw,48px);background:var(--surface);border:1px solid var(--line);border-radius:22px}
+.form-topline{display:flex;justify-content:space-between;gap:16px;font-size:10px;letter-spacing:1.4px;font-weight:800;color:var(--muted);padding-bottom:14px;border-bottom:1px solid var(--line)}
+.form-field{display:grid;gap:9px}.form-field label{font-size:14px;font-weight:800;letter-spacing:-.2px}
+.form-field label>span:not(.optional){color:var(--brand)}.optional{color:var(--muted);font-size:12px;font-weight:400}
+.form-field select,.form-field textarea{width:100%;min-height:52px;border-radius:10px;padding:13px 15px;background:var(--bg);color:var(--text);border:1px solid var(--line);font:500 14px 'DM Sans',sans-serif;transition:border-color .2s,box-shadow .2s}
+.form-field textarea{resize:vertical;min-height:96px}
+.form-field select:focus-visible,.form-field textarea:focus-visible{border-color:var(--brand);outline:2px solid var(--brand);outline-offset:2px}
+.form-field [aria-invalid=true]{border-color:#df5e80}
+.field-error{font-size:12px;color:#fc9cb3;min-height:0}.field-error:empty{display:none}
+body.light .field-error{color:#a9244e}
+.field-help,.form-disclaimer{font-size:12px;color:var(--muted);line-height:1.6}
+.form-disclaimer{margin:0}.quote-submit{width:100%;border:0;text-align:left;min-height:56px}
+.quote-aside{position:relative;overflow:hidden;background:linear-gradient(145deg,#3658f2,#1c318f);border-radius:22px;color:white;padding:32px;display:flex;flex-direction:column;justify-content:space-between;min-height:420px}
+.quote-aside-mark{display:grid;place-items:center;flex:1;min-height:125px}.quote-aside-mark img{width:125px;height:135px;filter:brightness(0) invert(1);transform:rotate(-13deg)}
+.quote-aside h3{font:700 clamp(40px,5vw,70px)/.95 'Space Grotesk',sans-serif;letter-spacing:-.07em;margin:14px 0}
+.quote-aside p{max-width:310px;line-height:1.7;color:#e0e6ff}.aside-number,.aside-footer{font-size:11px;letter-spacing:1.5px;font-weight:800}
+.evidence{background:var(--surface)}
+.evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.evidence-card{min-height:285px;padding:clamp(22px,3vw,34px);background:var(--bg);border:1px solid var(--line);border-radius:20px;display:flex;flex-direction:column;align-items:flex-start;transition:border-color .2s,transform .2s}
+.evidence-card:hover{border-color:var(--brand);transform:translateY(-3px)}
+.evidence-card i{font-size:27px;color:#819aff}
+.evidence-card h3{font-size:22px;letter-spacing:-.7px;margin:25px 0 9px}
+.evidence-card p{font-size:13px;line-height:1.7;color:var(--muted);margin:0}
+.evidence-note{font-size:10px;letter-spacing:1.2px;color:var(--muted);font-weight:800;margin-top:auto;padding-top:20px}
+.quote-toast{position:fixed;bottom:22px;left:50%;transform:translateX(-50%);z-index:90;padding:14px 22px;max-width:calc(100vw - 36px);background:#f0f4ff;color:#17254b;border:1px solid #7b98ff;border-radius:12px;box-shadow:0 16px 50px #0005;font-size:13px;font-weight:700}
+[data-magnetic]{will-change:transform}
+.project-art{transition:transform .35s ease,filter .35s ease}.project:hover .project-art{filter:saturate(1.12)}
+@media(max-width:850px){.quote-layout{grid-template-columns:1fr}.quote-aside{min-height:310px}.quote-aside-mark{position:absolute;right:8%;top:10%;opacity:.25}.evidence-grid{grid-template-columns:1fr}}
+@media(max-width:600px){.quote-form{padding:22px}.quote-aside{min-height:280px}.evidence-card{min-height:230px}}
+@media(prefers-reduced-motion:reduce){[data-magnetic],.evidence-card,.project-art{transition:none!important;transform:none!important}}
