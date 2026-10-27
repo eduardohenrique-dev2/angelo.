@@ -41,3 +41,11 @@ Importe o repositório na Vercel. Framework Preset: Vite. Build Command: `npm ru
 Confirme o número de WhatsApp e o @ do Instagram; substitua os projetos conceituais por cases reais e troque o logo aproximado pelo SVG final do designer.
 
 O repositório contém uma versão modular do front-end Angelo Studio preparada para manutenção no VS Code.
+
+## Atualização V5.2 — 27/10/2026
+
+- Menu hambúrguer editorial em tela cheia no desktop e no celular; atalhos para todas as seções e portal de links.
+- Ícones de navegação usando Bootstrap Icons via jsDelivr; a estrutura visual do offcanvas segue padrões do Bootstrap sem importar um framework CSS redundante.
+- Todos os destaques verdes do site principal foram substituídos por azul e lavanda, preservando modo claro/escuro.
+- Menu com suporte a Escape, navegação por teclado e áreas de toque maiores que 44 px.
+- Consulte as licenças e atribuições aplicáveis antes de incorporar ícones baixados do Flaticon Uicons.
