@@ -239,3 +239,87 @@ body.light .ticker{color:#fff!important}
  .service-card h3{font-size:15px;min-height:36px;hyphens:auto;overflow-wrap:anywhere}
  .service-card p{font-size:12px;line-height:1.5}
 }
+
+
+/* V7.1 — definitive theme surfaces and responsive repairs */
+html{background:#10172d}
+html.theme-prelight{background:#f6f8ff}
+body{width:100%;min-width:320px;max-width:100%;overflow-x:clip}
+body.light{background:#f6f8ff;color:#101a32}
+body:not(.light){background:#10172d;color:#f7f8fe}
+body:not(.light) .topbar{background:color-mix(in srgb,#10172d 92%,transparent);color:#f7f8fe}
+body.light:not(.menu-open) .topbar{background:color-mix(in srgb,#f6f8ff 92%,transparent);color:#101a32}
+body.light .section.services,body.light .section.about,body.light .section.proposal{background:var(--bg)}
+body.light .section.work,body.light .section.evidence{background:var(--surface)}
+body:not(.light) .section.services,body:not(.light) .section.about,body:not(.light) .section.proposal{background:var(--bg)}
+body:not(.light) .section.work,body:not(.light) .section.evidence{background:var(--surface)}
+body:not(.light) .quote-form,body:not(.light) .service-card{background:#18213d}
+body.light .quote-form,body.light .service-card{background:#fff}
+body:not(.light) .quote-form :is(select,textarea){background:#10172d;color:#f7f8fe}
+body.light .quote-form :is(select,textarea){background:#f6f8ff;color:#101a32}
+body.light .footer,body.light .topbar{border-color:#c9d4e7}
+.hero,.hero-copy,.hero-visual,.section,.intro-row,.service-grid,.project-grid,.quote-layout,.evidence-grid,.about,.contact-inside{min-width:0}
+.hero-copy{min-width:0}
+.hero h1{overflow-wrap:normal;max-width:100%;font-size:clamp(48px,6.5vw,110px)}
+.section h2,.contact h2{overflow-wrap:break-word;hyphens:auto;max-width:100%}
+.service-grid,.project-grid,.quote-layout,.evidence-grid{width:100%}
+.project,.service-card,.evidence-card,.quote-form,.quote-aside{min-width:0}
+.project-info,.project-art{min-width:0}
+.form-field select,.form-field textarea{max-width:100%}
+.footer{min-width:0}
+@media(min-width:1440px){
+ .hero-copy{padding-left:clamp(70px,7vw,130px);padding-right:clamp(50px,5vw,95px)}
+ .hero h1{font-size:clamp(85px,7vw,120px)}
+ .section{padding-left:max(70px,calc((100vw - 1440px)/2 + 80px));padding-right:max(70px,calc((100vw - 1440px)/2 + 80px))}
+}
+@media(min-width:981px) and (max-width:1240px){
+ .hero{grid-template-columns:minmax(0,1.12fr) minmax(0,.88fr)}
+ .hero-copy{padding:85px clamp(24px,4vw,60px) 28px}
+ .hero h1{font-size:clamp(65px,6.5vw,84px)}
+ .service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .service-card{min-height:245px}
+}
+@media(max-width:980px){
+ .hero{grid-template-columns:minmax(0,1fr)}
+ .hero-copy{min-height:0;padding:72px clamp(20px,6vw,55px) 42px}
+ .hero h1{font-size:clamp(54px,9vw,92px)}
+ .hero-visual.hero-visual-minimal{min-height:430px}
+ .intro-row{align-items:flex-start}
+}
+@media(max-width:700px){
+ .topbar{gap:8px;padding:12px 16px}
+ .brand{font-size:23px;flex-shrink:1;min-width:0}
+ .brand img{width:28px;height:33px}
+ .nav-actions{gap:8px}
+ .hero h1{font-size:clamp(49px,11.2vw,75px)}
+ .hero-copy{padding:62px 20px 34px}
+ .hero-foot{flex-wrap:wrap;gap:9px}
+ .section{padding:64px 18px}
+ .intro-row{display:block}
+ .section h2{font-size:clamp(42px,9.5vw,68px)}
+ .contact h2{font-size:clamp(46px,11vw,78px)}
+ .project-grid{grid-template-columns:minmax(0,1fr)}
+ .quote-layout,.about{grid-template-columns:minmax(0,1fr)}
+ .evidence-grid{grid-template-columns:minmax(0,1fr)}
+ .hero-visual.hero-visual-minimal{min-height:395px}
+ .footer{padding:42px 20px}
+}
+@media(max-width:400px){
+ .brand{font-size:21px;letter-spacing:-1.7px}
+ .brand small{font-size:7px;letter-spacing:2.1px}
+ .topbar{padding-inline:11px}
+ .hero h1{font-size:clamp(45px,11.6vw,54px)}
+ .hero-brand-tagline{font-size:clamp(27px,7.6vw,33px)}
+ .section{padding-inline:14px}
+ .service-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+ .service-card{padding:12px;min-height:285px}
+ .service-card h3{font-size:15px}
+ .service-card p{font-size:12px;line-height:1.45}
+ .project-art{height:245px}
+ .art-form strong{font-size:clamp(58px,16vw,83px)}
+ .art-pulso strong{font-size:clamp(35px,11vw,54px)}
+ .fake-browser{inset:48px 14px 22px;padding:13px}
+ .fake-browser strong{font-size:clamp(32px,11vw,48px)}
+ .footer-links{gap:10px}
+}
+@media(prefers-reduced-motion:reduce){html,body{scroll-behavior:auto}}
