@@ -323,3 +323,33 @@ body.light .footer,body.light .topbar{border-color:#c9d4e7}
  .footer-links{gap:10px}
 }
 @media(prefers-reduced-motion:reduce){html,body{scroll-behavior:auto}}
+
+
+/* About / Conte sua ideia — premium branded CTA */
+.about-copy .about-cta{
+ display:inline-flex;align-items:center;justify-content:space-between;gap:28px;
+ width:max-content;max-width:100%;min-height:54px;
+ padding:13px 15px 13px 21px;margin-top:20px;
+ border:1px solid #486aff;border-radius:12px;
+ background:#2f51e7;color:#fff!important;
+ font:800 14px/1.25 'DM Sans',sans-serif;letter-spacing:0;
+ box-shadow:0 8px 22px rgba(47,81,231,.18);
+ text-decoration:none;
+ transition:background .22s ease,box-shadow .22s ease,transform .22s ease;
+}
+.about-copy .about-cta svg{
+ display:block;flex:none;width:20px;height:20px;
+ transition:transform .22s ease;
+}
+.about-copy .about-cta:hover{
+ background:#2443cb;color:#fff!important;
+ box-shadow:0 12px 29px rgba(47,81,231,.27);
+ transform:translateY(-2px);
+}
+.about-copy .about-cta:hover svg{transform:translate(2px,-2px)}
+.about-copy .about-cta:active{transform:translateY(0) scale(.98)}
+.about-copy .about-cta:focus-visible{outline:3px solid #95aaff;outline-offset:4px}
+@media(max-width:380px){.about-copy .about-cta{width:100%;justify-content:space-between}}
+@media(prefers-reduced-motion:reduce){
+ .about-copy .about-cta,.about-copy .about-cta svg{transition:none!important;transform:none!important}
+}
