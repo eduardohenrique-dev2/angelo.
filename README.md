@@ -137,3 +137,32 @@ Fontes do Google e ícones Bootstrap seguem via CDN e precisam de internet para 
 6. Configurar `SITE_URL` na Vercel e fornecer projetos, métricas e depoimentos **reais e autorizados** antes de substituir estados de espera.
 
 **Limitação da validação atual:** as verificações de sintaxe/estrutura foram feitas; Lighthouse 90+ e visual em navegador físico não foram medidos aqui.
+
+
+## V8 — Posicionamento para marketing e portfólio expansível
+
+O site agora fala prioritariamente com social media, gestores de tráfego, agências, profissionais de marketing e infoprodutores. **Sites e landing pages** são o serviço principal; posts, identidade visual e vídeos curtos são serviços complementares.
+
+### Arquivos editados
+- `index.html`: novos textos, quatro serviços, faixa de dores, nova seção Sobre, galeria e CTA.
+- `src/main.js`: inicialização da galeria, mantendo tema, menu, barra de progresso e WhatsApp.
+- `src/marketing.css`: layout responsivo da nova galeria e seções.
+- `src/portfolio.js`: dados dos seis projetos demonstrativos e comportamento interativo.
+- `public/links.html`: apresentação alinhada ao novo posicionamento.
+
+### Onde substituir os placeholders
+- No HTML `#sobre`: substitua `[NOME COMPLETO]`, `[CIDADE]`, `[ANOS DE EXPERIÊNCIA]` e a área indicada para foto. Só publique informações confirmadas.
+- Em `src/portfolio.js`, o array `projects` contém seis registros com `title`, `type`, `image`, `link`, `alt`. Substitua `image:null` por uma URL autorizada (preferencialmente asset local em `public/projetos/`). Substitua `link:null` por uma URL de projeto real. Atualize o título e o texto alternativo.
+- Os cards sem link exibem **Ver projeto** desabilitado para não direcionar a um case inexistente.
+- Remova o aviso de `estudos conceituais` **somente quando** as imagens e projetos reais substituírem os demonstrativos.
+
+### Comportamento e testes
+- Desktop: galeria horizontal expande com mouse e clique; apenas um card ativo.
+- Tablet: grade de duas colunas.
+- Celular: acordeão vertical por toque; apenas um card aberto.
+- Teclado: `Tab` e `Enter/Espaço` nos cards; `aria-expanded` atualizado.
+- Filtros: Todos, Sites, Posts, Identidade, Vídeos.
+- Movimento reduzido: expansão sem transições.
+- Cheque tema claro/escuro, menu e formulário em 320px, 375px, 768px, 1024px e 1440px.
+
+Comandos: `npm install`, `npm run dev`, `npm run build`. O script de build existente gera `dist/standalone.html` junto com o build normal. A montagem e a sintaxe foram conferidas estaticamente; testes de navegação real e Lighthouse ainda dependem de execução local.
