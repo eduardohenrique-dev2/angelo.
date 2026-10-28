@@ -107,7 +107,7 @@ export function initMenu() {
       event.preventDefault();close();return;
     }
     if (event.key!=='Tab') return;
-    const focusable=[...dialog.querySelectorAll('a[href]'),themeButton,button].filter(Boolean).filter(el=>!el.disabled);
+    const focusable=[themeButton,button,...dialog.querySelectorAll('a[href]')].filter(Boolean).filter(el=>!el.disabled);
     const first=focusable[0],last=focusable.at(-1);
     if (event.shiftKey && document.activeElement===first) {event.preventDefault();last.focus();}
     else if (!event.shiftKey && document.activeElement===last) {event.preventDefault();first.focus();}
