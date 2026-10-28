@@ -1,5 +1,120 @@
 <!doctype html>
-<html lang="pt-BR"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#10172d"/><meta name="description" content="A angelo. une design, marketing e desenvolvimento web: identidade visual, posts, vídeos curtos, sites, landing pages e plataformas web."/><meta name="robots" content="index,follow"/><meta name="color-scheme" content="dark light"/><meta property="og:type" content="website"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Angelo Studio"/><meta property="og:title" content="angelo. Studio Digital — Design, marketing e desenvolvimento web"/><meta property="og:description" content="Você cuida da estratégia. A gente cuida do digital. Design, conteúdo, sites e plataformas web no mesmo estúdio."/><meta property="og:image" content="/og-cover.svg"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="angelo. Studio Digital — Design, marketing e desenvolvimento web"/><meta name="twitter:description" content="Você cuida da estratégia. A gente cuida do digital. Identidade visual, conteúdo, sites e plataformas web."/><meta name="twitter:image" content="/og-cover.svg"/><title>angelo. Studio Digital — Design, marketing e desenvolvimento web</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/><link rel="stylesheet" href="/src/site.css"/><link rel="stylesheet" href="/src/menu.css"/><link rel="stylesheet" href="/src/floating-actions.css"/><script>(function(){try{if(localStorage.getItem('angelo-theme')==='light')document.documentElement.classList.add('theme-prelight')}catch(e){}})()</script><script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script></head><body><a class="skip" href="#content">Ir para conteúdo</a><div class="progress" id="progress"></div>
+<html lang="pt-BR"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#10172d"/><meta name="description" content="A angelo. une design, marketing e desenvolvimento web: identidade visual, posts, vídeos curtos, sites, landing pages e plataformas web."/><meta name="robots" content="index,follow"/><meta name="color-scheme" content="dark light"/><meta property="og:type" content="website"/><meta property="og:locale" content="pt_BR"/><meta property="og:site_name" content="Angelo Studio"/><meta property="og:title" content="angelo. Studio Digital — Design, marketing e desenvolvimento web"/><meta property="og:description" content="Você cuida da estratégia. A gente cuida do digital. Design, conteúdo, sites e plataformas web no mesmo estúdio."/><meta property="og:image" content="/og-cover.svg"/><meta name="twitter:card" content="summary_large_image"/><meta name="twitter:title" content="angelo. Studio Digital — Design, marketing e desenvolvimento web"/><meta name="twitter:description" content="Você cuida da estratégia. A gente cuida do digital. Identidade visual, conteúdo, sites e plataformas web."/><meta name="twitter:image" content="/og-cover.svg"/><title>angelo. Studio Digital — Design, marketing e desenvolvimento web</title><link rel="icon" href="/favicon.svg" type="image/svg+xml"/><link rel="preconnect" href="https://fonts.googleapis.com"/><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/><link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet"/><link rel="stylesheet" href="/src/site.css"/><link rel="stylesheet" href="/src/menu.css"/><link rel="stylesheet" href="/src/floating-actions.css"/><script>(function(){document.documentElement.classList.add('js');window.__angeloIntroStart=performance.now();try{if(localStorage.getItem('angelo-theme')==='light')document.documentElement.classList.add('theme-prelight')}catch(e){}})()</script><script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script><script defer src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js"></script></head><body><style id="intro-critical">
+/* Intro crítica inline: renderiza na primeira pintura, sem depender de CDN. */
+#site-intro{display:none}
+html.js #site-intro{
+  --intro-ease:cubic-bezier(.32,.72,0,1);
+  --intro-origin-x:50%;--intro-origin-y:45%;
+  position:fixed;inset:0;z-index:2000;
+  width:100%;height:100vh;height:100dvh;min-height:100vh;min-height:100dvh;
+  display:flex;align-items:center;justify-content:center;
+  margin:0;padding:24px;
+  background:#10172d;color:#fff;
+  overflow:hidden;isolation:isolate;
+  opacity:1;pointer-events:auto;
+  animation:intro-css-safety .001s 3s forwards;
+}
+html:not(.js) #site-intro{display:none!important}
+html.intro-locked,html.intro-locked body{overflow:hidden!important;overscroll-behavior:none}
+body.intro-active .floating-actions{visibility:hidden!important;pointer-events:none!important}
+.intro-inner{
+  position:relative;z-index:1;
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  width:min(100%,420px);text-align:center;
+}
+.intro-logo{display:block;width:clamp(72px,18vw,120px);height:auto;overflow:visible}
+.intro-logo .intro-trace-upper{
+  fill:none;stroke:#fff;stroke-width:13;
+  stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:108;stroke-dashoffset:108;
+  animation:intro-trace .7s 0s var(--intro-ease) forwards;
+}
+.intro-logo .intro-trace-angle{
+  fill:none;stroke:#fff;stroke-width:19;
+  stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:295;stroke-dashoffset:295;
+  animation:intro-trace .72s .16s var(--intro-ease) forwards;
+}
+.intro-logo .intro-symbol-dot{
+  fill:#6280ff;opacity:0;
+  transform-box:fill-box;transform-origin:center center;
+  transform:translateY(-48px) scale(.75);
+  animation:intro-dot-fall .4s .7s var(--intro-ease) forwards;
+}
+.intro-name-mask{display:block;max-width:100%;overflow:hidden;padding:0 8px 3px}
+.intro-name{
+  display:block;transform:translateY(110%);opacity:0;
+  font:700 clamp(43px,10vw,66px)/1.08 'Space Grotesk','DM Sans',sans-serif;
+  letter-spacing:-.075em;
+  animation:intro-name-rise .5s 1s var(--intro-ease) forwards;
+}
+.intro-name-dot{color:#6280ff}
+.intro-subline{
+  margin:0;color:#d3ddf5;
+  font:700 12px/1.6 'DM Sans',sans-serif;
+  letter-spacing:.31em;
+  opacity:0;
+  animation:intro-subtitle .35s 1.18s var(--intro-ease) forwards;
+}
+.intro-blue-wipe{
+  position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:#4261ff;
+  clip-path:circle(0px at var(--intro-origin-x) var(--intro-origin-y));
+  animation:intro-blue-expand .55s 1.59s var(--intro-ease) forwards;
+}
+.intro-skip{
+  position:absolute;right:calc(18px + env(safe-area-inset-right));
+  top:calc(18px + env(safe-area-inset-top));
+  z-index:3;min-width:72px;min-height:44px;
+  border:1px solid rgba(255,255,255,.28);border-radius:10px;
+  padding:10px 16px;background:rgba(16,23,45,.28);
+  color:rgba(255,255,255,.82);
+  font:700 13px/1.25 'DM Sans',sans-serif;
+  cursor:pointer;
+}
+.intro-skip:focus-visible{outline:3px solid #aabfff;outline-offset:3px}
+html.js #site-intro.intro-leaving{opacity:0;pointer-events:none;transition:opacity .17s ease-out}
+html.js #site-intro.is-complete{display:none!important}
+@keyframes intro-trace{to{stroke-dashoffset:0}}
+@keyframes intro-dot-fall{
+  0%{opacity:0;transform:translateY(-48px) scale(.75)}
+  55%{opacity:1;transform:translateY(7px) scale(.93,1.07)}
+  78%{opacity:1;transform:translateY(-5px) scale(1.25)}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+@keyframes intro-name-rise{to{opacity:1;transform:translateY(0)}}
+@keyframes intro-subtitle{to{opacity:1}}
+@keyframes intro-blue-expand{
+  from{clip-path:circle(0px at var(--intro-origin-x) var(--intro-origin-y))}
+  to{clip-path:circle(150vmax at var(--intro-origin-x) var(--intro-origin-y))}
+}
+/* Caso o JS não conclua, o overlay deixa de bloquear a tela em 3s. */
+@keyframes intro-css-safety{to{opacity:0;visibility:hidden;pointer-events:none}}
+@media(prefers-reduced-motion:reduce){
+ .intro-logo .intro-trace-upper,.intro-logo .intro-trace-angle{
+   stroke-dashoffset:0!important;animation:none!important
+ }
+ .intro-logo .intro-symbol-dot{opacity:1;transform:none!important;animation:none!important}
+ .intro-name{opacity:1;transform:none!important;animation:none!important}
+ .intro-subline{opacity:1;animation:none!important}
+ .intro-blue-wipe{display:none!important;animation:none!important}
+ html.js #site-intro.intro-leaving{transition:opacity .2s linear}
+}
+</style>
+<div id="site-intro" role="status" aria-label="Carregando angelo. Studio Digital">
+  <div class="intro-inner">
+    <svg class="intro-logo" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 220" role="img" aria-label="Símbolo da angelo.">
+      <circle class="intro-trace-upper" cx="100" cy="27" r="17"/>
+      <path class="intro-trace-angle" d="M29 190 100 61 171 190"/>
+      <circle class="intro-symbol-dot" cx="100" cy="145" r="16"/>
+    </svg>
+    <div class="intro-name-mask"><span class="intro-name">angelo<span class="intro-name-dot">.</span></span></div>
+    <p class="intro-subline">STUDIO DIGITAL</p>
+  </div>
+  <div class="intro-blue-wipe" aria-hidden="true"></div>
+  <button class="intro-skip" type="button">Pular</button>
+</div>
+<a class="skip" href="#content">Ir para conteúdo</a><div class="progress" id="progress"></div>
 <header class="topbar"><a href="#inicio" class="brand" aria-label="Angelo Studio — início"><img src="/logo.svg" alt="" width="33" height="38"/><span>angelo<span class="blue">.</span><small>STUDIO DIGITAL</small></span></a><div class="nav-actions"><button class="icon-button" id="theme" aria-label="Alternar tema"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg></button><button id="menu" class="icon-button menu-button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav"><svg class="menu-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button></div></header>
 <nav id="mobile-nav" class="mobile-nav" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true" inert>
   <div class="menu-scroll">
