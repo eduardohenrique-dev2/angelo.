@@ -156,9 +156,12 @@ export function initGallery() {
   if(!gallery)return;
   const {gsap,ScrollTrigger}=engine||{};
   let active=[];
+  let mediaScope=null;
   function refreshGallery(){
     active.forEach(tween=>tween.kill());
     active=[];
+    mediaScope?.revert();
+    mediaScope=null;
     if(!gsap||reduce())return;
     const cards=[...gallery.querySelectorAll('.expand-card')];
     if(!cards.length)return;
@@ -167,15 +170,15 @@ export function initGallery() {
       scrollTrigger:{trigger:gallery,start:'top 90%',once:true}
     });
     active.push(first);
-    if(!smallScreen()){
+    mediaScope=gsap.matchMedia();
+    mediaScope.add('(min-width: 768px) and (prefers-reduced-motion: no-preference)',()=>{
       cards.forEach(card=>{
         const img=card.querySelector('img');
         if(!img)return;
-        const tween=gsap.fromTo(img,{yPercent:2},{yPercent:-2,ease:'none',immediateRender:false,
+        gsap.fromTo(img,{yPercent:2},{yPercent:-2,ease:'none',immediateRender:false,
           scrollTrigger:{trigger:card,start:'top bottom',end:'bottom top',scrub:.8}});
-        active.push(tween);
       });
-    }
+    });
     ScrollTrigger.refresh();
   }
   document.addEventListener('portfolio:updated',()=>{
