@@ -29,6 +29,8 @@ function startMotionAfterIntro(){
   }
 }
 window.addEventListener('intro:done',startMotionAfterIntro);
+// O usuário pode ter pulado antes de este módulo carregar em conexão 3G.
+if(window.__angeloIntroCompleted) startMotionAfterIntro();
 initFloatingActions();
 initIntro();
 
