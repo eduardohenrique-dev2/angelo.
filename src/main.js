@@ -1,6 +1,7 @@
 import './style.css';
 import './menu.css';
 import './marketing.css';
+import './studio-v9.css';
 import { initPortfolio } from './portfolio.js';
 import { initMenu } from './menu.js';
 const theme = document.querySelector('#theme');
@@ -13,7 +14,10 @@ initMenu();theme.addEventListener('click',()=>{const next=document.body.classLis
 initPortfolio();
 document.querySelector('#year').textContent=new Date().getFullYear();
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const obs=new IntersectionObserver(entries=>entries.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}}),{threshold:.05});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
-addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('#progress').style.transform='scaleX('+(max>0?scrollY/max:0)+')';},{passive:true});
+const topShortcut=document.querySelector('.floating-top');
+function updateScrollUI(){const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('#progress').style.transform='scaleX('+(max>0?scrollY/max:0)+')';if(topShortcut)topShortcut.hidden=scrollY<=400;}
+addEventListener('scroll',updateScrollUI,{passive:true});
+updateScrollUI();
 
 /* V6: quote builder (client-side only, no personal data collected) */
 const quoteForm=document.querySelector('#quote-form');
