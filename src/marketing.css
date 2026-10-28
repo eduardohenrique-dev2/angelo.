@@ -79,3 +79,66 @@
 @media(max-width:720px){
  .expand-card.is-expanded .expand-trigger img{object-fit:contain}
 }
+
+
+/* V8.2 — retratos verticais: cada arte preserva sua proporção 4:5 */
+.expanding-gallery{
+ display:grid!important;
+ grid-template-columns:repeat(3,minmax(0,1fr));
+ align-items:start;
+ gap:clamp(12px,1.8vw,22px);
+ height:auto!important;
+ overflow:visible!important;
+}
+.expand-card,.expand-card.is-expanded{
+ width:100%!important;min-width:0;
+ height:auto!important;flex:none!important;
+ border-radius:16px;overflow:hidden;
+ transition:transform .25s ease,border-color .25s ease,box-shadow .25s ease;
+}
+.expand-card.is-expanded{
+ border-color:#6985ff;
+ box-shadow:0 12px 30px rgba(12,24,65,.16);
+}
+.expand-card:hover{transform:translateY(-4px)}
+.expand-trigger,.expand-card.is-expanded .expand-trigger{
+ display:block;position:relative;
+ width:100%!important;
+ height:auto!important;min-height:0!important;
+ aspect-ratio:4 / 5;
+ overflow:hidden;transition:none!important;
+}
+.expand-trigger img,.expand-card.is-expanded .expand-trigger img{
+ display:block;width:100%;height:100%;
+ position:absolute;inset:0;
+ aspect-ratio:4 / 5;
+ object-fit:contain!important;object-position:center;
+ transform:none!important;
+ background:#152247;
+}
+.expand-overlay{
+ justify-content:flex-end;
+ background:linear-gradient(180deg,transparent 63%,rgba(5,12,35,.84));
+ padding:clamp(12px,1.5vw,18px);
+}
+.expand-title{font-size:clamp(16px,1.7vw,24px)}
+.expand-card .expand-detail{display:none!important}
+.expand-card.is-expanded .expand-detail{
+ display:flex!important;max-height:none!important;
+ padding:12px!important;min-height:60px;opacity:1;
+}
+@media(min-width:701px) and (max-width:1100px){
+ .expanding-gallery{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .expand-card,.expand-card.is-expanded{height:auto!important}
+}
+@media(max-width:700px){
+ .expanding-gallery{grid-template-columns:minmax(0,1fr)}
+ .expand-card,.expand-card.is-expanded{height:auto!important}
+ .expand-trigger,.expand-card.is-expanded .expand-trigger{
+  height:auto!important;min-height:0!important;aspect-ratio:4 / 5
+ }
+ .expand-title{font-size:clamp(19px,5vw,25px)}
+}
+@media(prefers-reduced-motion:reduce){
+ .expand-card,.expand-card:hover{transform:none!important;transition:none!important}
+}
