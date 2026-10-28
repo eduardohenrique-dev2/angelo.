@@ -13,6 +13,59 @@
  box-shadow:0 7px 17px rgba(5,13,36,.2);
  line-height:0;transition:transform .18s ease,box-shadow .18s ease,opacity .18s ease;
 }
+/* WhatsApp: gradiente da marca + dois anéis de pulso visíveis */
+.floating-actions > .floating-whatsapp{
+ isolation:isolate;
+ overflow:visible;
+ border-color:rgba(255,255,255,.28);
+ background:
+   linear-gradient(180deg,rgba(255,255,255,.18),transparent 48%),
+   linear-gradient(145deg,#4D6BFF,#2B45E0);
+ box-shadow:0 8px 24px rgba(43,69,224,.35),0 2px 6px rgba(5,10,30,.25);
+ animation:fab-whatsapp-enter .44s cubic-bezier(.2,1.2,.32,1) both,
+           fab-whatsapp-breathe 3s ease-in-out .44s infinite;
+}
+.floating-actions > .floating-whatsapp::before,
+.floating-actions > .floating-whatsapp::after{
+ content:"";
+ position:absolute;
+ inset:-2px;
+ z-index:0;
+ display:block;
+ border:2px solid rgba(102,136,255,.88);
+ border-radius:50%;
+ pointer-events:none;
+ opacity:0;
+ transform:scale(1);
+ animation:fab-whatsapp-ring 2.4s cubic-bezier(.22,.61,.36,1) infinite;
+}
+.floating-actions > .floating-whatsapp::after{animation-delay:1.2s}
+@keyframes fab-whatsapp-ring{
+ 0%{transform:scale(1);opacity:.48}
+ 100%{transform:scale(1.7);opacity:0}
+}
+@keyframes fab-whatsapp-enter{
+ from{opacity:0;transform:scale(.65)}
+ to{opacity:1;transform:scale(1)}
+}
+@keyframes fab-whatsapp-breathe{
+ 0%,100%{transform:scale(1)}
+ 50%{transform:scale(1.04)}
+}
+body:not(.light) .floating-actions > .floating-whatsapp{
+ border-color:rgba(200,215,255,.48);
+ box-shadow:0 8px 26px rgba(65,98,255,.48),0 2px 6px rgba(5,10,30,.3);
+}
+@media(hover:hover) and (pointer:fine){
+ .floating-actions > .floating-whatsapp:hover{
+   animation:none;
+   transform:scale(1.08);
+   box-shadow:0 12px 32px rgba(43,69,224,.47),0 3px 8px rgba(5,10,30,.3);
+ }
+ .floating-actions > .floating-whatsapp:hover::before,
+ .floating-actions > .floating-whatsapp:hover::after{animation-play-state:paused}
+ .floating-actions > .floating-whatsapp:active{transform:scale(.94)}
+}
 .floating-actions .floating-icon{position:relative;z-index:2;display:block;width:23px;height:23px;min-width:23px;min-height:23px;margin:0;pointer-events:none}
 .floating-actions .floating-top[hidden]{display:none}
 .floating-actions .floating-top:not([hidden]){animation:fab-show .22s ease-out both}
@@ -43,6 +96,12 @@ body.menu-open .floating-actions,body.lightbox-open .floating-actions{visibility
  .floating-actions .floating-top:not([hidden]){display:grid}
 }
 @media(prefers-reduced-motion:reduce){
+ .floating-actions > .floating-whatsapp,
+ .floating-actions > .floating-whatsapp::before,
+ .floating-actions > .floating-whatsapp::after{animation:none!important}
+ .floating-actions > .floating-whatsapp::before,
+ .floating-actions > .floating-whatsapp::after{display:none!important}
+
  .floating-actions > :is(.floating-top,.floating-whatsapp),.floating-actions .fab-tooltip{transition:opacity .15s linear;transform:none!important;animation:none!important}
  .floating-actions .floating-top:not([hidden]){animation:none!important}
 }
