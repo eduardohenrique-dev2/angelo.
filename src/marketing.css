@@ -142,3 +142,120 @@
 @media(prefers-reduced-motion:reduce){
  .expand-card,.expand-card:hover{transform:none!important;transition:none!important}
 }
+
+
+/* V8.3 — galeria sanfona: artes em retrato, bem próximas, uma expansão por vez */
+@media (min-width: 721px) {
+  .expanding-gallery {
+    display:flex!important;
+    flex-direction:row!important;
+    flex-wrap:nowrap!important;
+    align-items:stretch!important;
+    gap:5px!important;
+    width:100%;
+    height:clamp(390px,45vw,610px)!important;
+    overflow:hidden!important;
+  }
+  .expanding-gallery .expand-card,
+  .expanding-gallery .expand-card.is-expanded {
+    display:flex;
+    flex-direction:column;
+    flex:1 1 0%!important;
+    min-width:0!important;
+    width:auto!important;
+    height:100%!important;
+    overflow:hidden;
+    border-radius:10px;
+    box-shadow:none;
+    transition:flex-grow 470ms cubic-bezier(.32,.72,0,1),border-color 200ms ease!important;
+    transform:none!important;
+  }
+  .expanding-gallery .expand-card.is-expanded {
+    flex-grow:6!important;
+    border-color:#6985ff;
+  }
+  .expanding-gallery .expand-trigger,
+  .expanding-gallery .expand-card.is-expanded .expand-trigger {
+    position:relative;
+    width:100%!important;
+    height:100%!important;
+    min-height:0!important;
+    flex:1 1 auto;
+    aspect-ratio:auto!important;
+  }
+  .expanding-gallery .expand-trigger img,
+  .expanding-gallery .expand-card.is-expanded .expand-trigger img {
+    position:absolute;inset:0;
+    width:100%;height:100%;
+    object-fit:cover!important;
+    object-position:center;
+  }
+  .expanding-gallery .expand-card.is-expanded .expand-trigger img{
+    object-fit:contain!important;
+    background:#14213d;
+  }
+  .expanding-gallery .expand-overlay {
+    padding:15px!important;
+    pointer-events:none;
+  }
+  .expanding-gallery .expand-card:not(.is-expanded) .expand-title,
+  .expanding-gallery .expand-card:not(.is-expanded) .expand-type {
+    opacity:0;transform:translateY(8px);
+  }
+  .expanding-gallery .expand-type,
+  .expanding-gallery .expand-title {
+    transition:opacity 220ms ease,transform 220ms ease;
+    opacity:1;transform:none;
+  }
+  .expanding-gallery .expand-card .expand-detail {display:none!important}
+  .expanding-gallery .expand-card.is-expanded .expand-detail {
+    display:flex!important;
+    flex:0 0 auto;
+    min-height:60px;
+    max-height:80px!important;
+    padding:10px 12px!important;
+  }
+}
+@media (max-width: 720px) {
+  .expanding-gallery {
+    display:flex!important;
+    flex-direction:column!important;
+    flex-wrap:nowrap!important;
+    gap:7px!important;
+    height:auto!important;
+    overflow:visible!important;
+  }
+  .expanding-gallery .expand-card,
+  .expanding-gallery .expand-card.is-expanded{
+    display:flex;flex-direction:column;
+    flex:0 0 auto!important;width:100%!important;
+    height:auto!important;transform:none!important;
+    border-radius:12px;
+  }
+  .expanding-gallery .expand-trigger,
+  .expanding-gallery .expand-card.is-expanded .expand-trigger {
+    position:relative;min-height:0!important;
+    width:100%!important;aspect-ratio:auto!important;
+    height:80px!important;
+    transition:height 450ms cubic-bezier(.32,.72,0,1)!important;
+  }
+  .expanding-gallery .expand-card.is-expanded .expand-trigger{
+    height:min(115vw,550px)!important;
+  }
+  .expanding-gallery .expand-trigger img,
+  .expanding-gallery .expand-card.is-expanded .expand-trigger img {
+    position:absolute;inset:0;width:100%;height:100%;
+    object-fit:cover!important;
+  }
+  .expanding-gallery .expand-card.is-expanded .expand-trigger img{
+    object-fit:contain!important;background:#14213d;
+  }
+  .expanding-gallery .expand-card .expand-detail{display:none!important}
+  .expanding-gallery .expand-card.is-expanded .expand-detail{display:flex!important}
+}
+@media(prefers-reduced-motion:reduce){
+ .expanding-gallery .expand-card,
+ .expanding-gallery .expand-trigger,
+ .expanding-gallery .expand-title,
+ .expanding-gallery .expand-type{transition:none!important}
+}
