@@ -76,7 +76,7 @@ function animateText() {
   document.querySelectorAll('h1,.section h2,.contact h2').forEach(heading=>{
     splitWords(heading);
     const words=[...heading.querySelectorAll('.word')];
-    const accent=words.filter(word=>word.closest('em') || (word.closest('h1 > span')));
+    const accent=words.filter(word=>word.closest('em') || (word.closest('.hero-highlight')));
     const normal=words.filter(word=>!accent.includes(word));
     const tl=gsap.timeline({scrollTrigger:{trigger:heading,start:'top 90%',once:true}});
     if(normal.length)tl.from(normal,{yPercent:105,opacity:0,duration:.75,ease:'power3.out',stagger:.06,immediateRender:false},0);
