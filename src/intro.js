@@ -4,6 +4,7 @@ let savedMarkup = '';
 let historyListenerInstalled = false;
 
 function announceDone(skipped) {
+  window.__angeloIntroCompleted = true;
   window.dispatchEvent(new CustomEvent('intro:done', {
     detail: { skipped: Boolean(skipped) }
   }));
@@ -21,6 +22,7 @@ export function finishIntro(skipped = false) {
   state.button.removeEventListener('click', state.onSkip);
 
   state.overlay.setAttribute('aria-hidden', 'true');
+  delete window.angeloIntroSkip;
   state.overlay.classList.add('is-complete');
   document.documentElement.classList.remove('intro-locked');
   document.body.classList.remove('intro-active');
@@ -45,11 +47,16 @@ export function skipIntro() {
 }
 
 export function initIntro() {
+  // Os controles precoces do HTML deixam de ser necessários depois do carregamento do módulo.
+  window.__angeloIntroBootCleanup?.();
+  delete window.__angeloIntroBootCleanup;
   const overlay = document.getElementById('site-intro');
   if (!overlay) {
-    announceDone(true);
+    if (!window.__angeloIntroCompleted) announceDone(true);
     return;
   }
+  window.__angeloIntroCompleted = false;
+  window.angeloIntroSkip = skipIntro;
   if (activeIntro) return;
 
   savedMarkup = overlay.outerHTML;
@@ -130,7 +137,7 @@ export function initIntro() {
   }
 
   // Segurança absoluta: nenhuma dependência de fontes, imagens ou GSAP.
-  after(4000, () => finishIntro(true));
+  if (!state.finished) after(4000, () => finishIntro(true));
 
   // Retorno do histórico (bfcache) conta como uma nova abertura.
   if (!historyListenerInstalled) {
