@@ -132,7 +132,7 @@ export function initIntro() {
     after(800, () => finishIntro());
   } else {
     after(1580, placeOrigin);
-    after(2030, () => overlay.classList.add('intro-leaving'));
+    after(2040, () => overlay.classList.add('intro-leaving'));
     after(2200, () => finishIntro());
   }
 
