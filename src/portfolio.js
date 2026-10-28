@@ -1,12 +1,18 @@
 // Angelo Studio — portfólio demonstrativo.
 // SUBSTITUIR PELA IMAGEM REAL: altere "image", "alt", "title" e "link" após autorização.
 const projects = [
-  { id:'p1', title:'Landing page de campanha',type:'site',label:'Site',image:null,link:null,alt:'Placeholder azul com a marca Angelo para landing page conceitual' },
-  { id:'p2', title:'Posts para lançamento',type:'post',label:'Post',image:null,link:null,alt:'Placeholder azul com a marca Angelo para posts conceituais' },
-  { id:'p3', title:'Identidade de marca',type:'identity',label:'Identidade',image:null,link:null,alt:'Placeholder azul com a marca Angelo para identidade visual conceitual' },
-  { id:'p4', title:'Vídeo curto para Reels',type:'video',label:'Vídeo',image:null,link:null,alt:'Placeholder azul com a marca Angelo para vídeo curto conceitual' },
-  { id:'p5', title:'Site institucional',type:'site',label:'Site',image:null,link:null,alt:'Placeholder azul com a marca Angelo para site institucional conceitual' },
-  { id:'p6', title:'Conteúdo para redes',type:'post',label:'Post',image:null,link:null,alt:'Placeholder azul com a marca Angelo para conteúdo conceitual' }
+  // Posts fornecidos para o portfólio; links podem ser adicionados quando autorizados.
+  { id:'post-vacinacao', title:'Vacinação de cães e gatos',type:'post',label:'Post',image:'/projetos/post-vacinacao-pets.webp',link:null,alt:'Arte sobre vacinação em cães e gatos, com cachorro e gato',showcase:true },
+  { id:'post-impressora', title:'Da imaginação à realidade',type:'post',label:'Post',image:'/projetos/post-impressao-3d.webp',link:null,alt:'Arte preta e azul com impressora 3D criando um dragão',showcase:true },
+  { id:'post-agua', title:'Água sempre disponível',type:'post',label:'Post',image:'/projetos/post-agua-para-pets.webp',link:null,alt:'Post informativo sobre água fresca para pets, com tigela despejando água',showcase:true },
+  { id:'post-calor', title:'Cuidados com pets no calor',type:'post',label:'Post',image:'/projetos/post-calorao-pets.webp',link:null,alt:'Post sobre como proteger cães e gatos nos dias quentes',showcase:true },
+  { id:'post-kelvin', title:'Kelvin — Terceirão Amarelo',type:'post',label:'Post',image:'/projetos/post-kelvin-terceirao.webp',link:null,alt:'Arte esportiva preta e amarela com jogador Kelvin',showcase:true },
+  { id:'post-basquete', title:'Elenco de basquete',type:'post',label:'Post',image:'/projetos/post-elenco-basquete.webp',link:null,alt:'Arte esportiva do Terceirão com bola de basquete e texto Elenco',showcase:true },
+  { id:'post-futsal', title:'Elenco de futsal',type:'post',label:'Post',image:'/projetos/post-elenco-futsal.webp',link:null,alt:'Arte do Terceirão Amarelo anunciando elenco de futsal',showcase:true },
+  // Placeholders conservados até existirem materiais reais destas categorias.
+  { id:'p1', title:'Landing page de campanha',type:'site',label:'Site',image:null,link:null,alt:'Placeholder de landing page conceitual' },
+  { id:'p3', title:'Identidade de marca',type:'identity',label:'Identidade',image:null,link:null,alt:'Placeholder de identidade visual conceitual' },
+  { id:'p4', title:'Vídeo curto para Reels',type:'video',label:'Vídeo',image:null,link:null,alt:'Placeholder de vídeo curto conceitual' }
 ];
 const palette=['#2447cc','#375cf2','#1c3283','#3e63ed','#1a2e76','#5377ff'];
 function placeholder(i){
@@ -18,7 +24,7 @@ export function initPortfolio(){
  const empty=document.querySelector('#project-empty');
  const buttons=[...document.querySelectorAll('.portfolio-filters [data-filter]')];
  if(!gallery||!empty||!buttons.length)return;
- let filter='all',activeId='p1';
+ let filter='all',activeId='post-vacinacao';
  const reduceMotion=matchMedia('(prefers-reduced-motion: reduce)');
 
  function render(){
@@ -40,19 +46,20 @@ export function initPortfolio(){
    trigger.setAttribute('aria-label','Expandir '+project.title);
    const img=document.createElement('img');
    img.src=project.image||placeholder(projects.indexOf(project));
+   if(project.image){img.addEventListener('error',()=>{img.src=placeholder(projects.indexOf(project));},{once:true});}
    img.alt=project.alt;
    img.loading='lazy';img.decoding='async';img.width=800;img.height=1000;
    const overlay=document.createElement('span');overlay.className='expand-overlay';
-   const label=document.createElement('span');label.className='expand-type';label.textContent=project.label+' / estudo conceitual';
+   const label=document.createElement('span');label.className='expand-type';label.textContent=project.showcase?project.label+' / arte gráfica':project.label+' / estudo conceitual';
    const title=document.createElement('strong');title.className='expand-title';title.textContent=project.title;
    const chevron=document.createElement('span');chevron.className='expand-indicator';chevron.textContent='+';
    overlay.append(label,title,chevron);trigger.append(img,overlay);
    const detail=document.createElement('div');detail.className='expand-detail';detail.id='project-detail-'+project.id;
-   const desc=document.createElement('span');desc.textContent=project.label+' • imagem demonstrativa';
+   const desc=document.createElement('span');desc.textContent=project.showcase?project.label+' • peça de portfólio':project.label+' • imagem demonstrativa';
    const action=document.createElement(project.link?'a':'button');action.className='expand-action';
    action.textContent='Ver projeto';
    if(project.link){action.href=project.link;action.target='_blank';action.rel='noopener noreferrer';}
-   else {action.type='button';action.disabled=true;action.title='Projeto demonstrativo: link disponível quando o trabalho real for publicado';}
+   else {action.type='button';action.disabled=true;action.title='Link de projeto ainda não informado';}
    detail.append(desc,action);
    article.append(trigger,detail);
    trigger.addEventListener('click',()=>select(project.id));
