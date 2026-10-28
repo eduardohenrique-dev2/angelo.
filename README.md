@@ -17,6 +17,7 @@ src/
   floating-actions.css    # dois atalhos circulares
   floating-actions.js     # botão de topo e progresso
   scroll.js               # GSAP + ScrollTrigger + Lenis (com fallback)
+  intro.js                # intro do símbolo e ciclo de vida intro:done
 public/
   projetos/               # sete imagens WebP reais
   logo.svg
@@ -77,3 +78,32 @@ Lenis roda somente em desktop sem preferência por redução de movimento; dispo
 - [ ] Executar `npm run build` e Lighthouse antes da publicação.
 
 A sintaxe JavaScript, os seletores principais, os caminhos dos WebPs e as âncoras foram auditados por leitura estática. A compilação Vite e os testes visuais em browsers ainda exigem execução no ambiente local.
+
+## Intro de abertura — Etapa 6
+
+A intro aparece a cada abertura ou recarga, inclusive na restauração do histórico (bfcache), sem usar cookies ou sessionStorage.
+
+- `index.html`: SVG do símbolo embutido com a geometria de `public/logo.svg`, estilos críticos inline no início de `<body>` e classe `js` aplicada antecipadamente.
+- `src/intro.js`: `initIntro()`, `skipIntro()`, `finishIntro()`, tratamento de ESC, foco, `inert`, trava de rolagem, controle de tempo e emissão do evento `intro:done`.
+- `src/main.js`: animações do hero e da página aguardam `intro:done`.
+- Sem JavaScript: a intro permanece oculta; em falhas após a classe `js`, o CSS libera visualmente a tela em 3 segundos.
+- Usuários com movimento reduzido recebem a marca estática durante 600ms e saída rápida por opacidade.
+- Overlay em `100dvh`, sobre o header, sem imagens, vídeos ou dependências adicionais.
+
+### Testes da intro
+
+- [ ] Abertura inicial e recarga exibem a intro novamente
+- [ ] O traço branco reproduz a geometria exata do logo
+- [ ] O ponto azul cai, quica e volta ao tamanho normal
+- [ ] O nome e a assinatura entram antes da expansão azul
+- [ ] A tela é liberada em aproximadamente 2,2s, sempre em até 4s
+- [ ] Botão Pular encerra imediatamente e libera o scroll
+- [ ] ESC encerra imediatamente e devolve o foco
+- [ ] No modo reduzido a marca fica estática, sem parallax ou expansão
+- [ ] Simulação 3G (DevTools), inclusive com scripts CDN bloqueados
+- [ ] iPhone Safari: `100dvh`, área segura e intro sem flash
+- [ ] JavaScript desativado: hero visível, intro ausente
+- [ ] Os botões flutuantes só aparecem após a intro
+- [ ] O hero só começa a animar depois de `intro:done`
+
+As rotinas de término, Pular e ESC foram verificadas por simulação de DOM. A validação de renderização e timing deve ser feita no navegador.
