@@ -22,7 +22,7 @@ export function initSmoothScroll() {
   if (!gsap || !ScrollTrigger) return null;
   gsap.registerPlugin(ScrollTrigger);
   engine = { gsap, ScrollTrigger };
-  if (reduce() || smallScreen() || !window.Lenis) return null;
+  if (reduce() || smallScreen() || !matchMedia('(pointer:fine)').matches || !window.Lenis) return null;
   const lenis = new window.Lenis({
     duration: 1.08,
     smoothWheel: true,
