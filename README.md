@@ -166,3 +166,20 @@ O site agora fala prioritariamente com social media, gestores de tráfego, agên
 - Cheque tema claro/escuro, menu e formulário em 320px, 375px, 768px, 1024px e 1440px.
 
 Comandos: `npm install`, `npm run dev`, `npm run build`. O script de build existente gera `dist/standalone.html` junto com o build normal. A montagem e a sintaxe foram conferidas estaticamente; testes de navegação real e Lighthouse ainda dependem de execução local.
+
+
+## Novos posts adicionados ao cadastro do portfólio (27/10/2026)
+
+Sete peças de design fornecidas para a categoria `Posts`: vacinação de cães e gatos, impressora 3D, água para pets, calorão, Kelvin, elenco de basquete e elenco de futsal.
+
+O arquivo `src/portfolio.js` já aponta para os respectivos arquivos `.webp` em `public/projetos/`. **As imagens precisam ser copiadas para essa pasta e versionadas no Git antes do deploy.** Sem elas, o script renderiza o placeholder antigo automaticamente.
+
+A distribuição de imagens é feita no ZIP `angelo-posts-imagens.zip` entregue na conversa. Depois de extrair na raiz do projeto, executar:
+
+```powershell
+git add public/projetos
+git commit -m "feat: adicionar sete posts ao portfólio"
+git push origin main
+```
+
+O portfólio preserva os filtros e a expansão. Imagens enviadas são apresentadas como artes gráficas, enquanto as categorias ainda sem materiais continuam marcadas como demonstração. Os links "Ver projeto" permanecem desativados até haver URLs fornecidas.
