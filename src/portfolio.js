@@ -49,10 +49,10 @@ export function initPortfolio(){
    overlay.append(label,title,chevron);trigger.append(img,overlay);
    const detail=document.createElement('div');detail.className='expand-detail';detail.id='project-detail-'+project.id;
    const desc=document.createElement('span');desc.textContent=project.label+' • imagem demonstrativa';
-   const action= document.createElement(project.link?'a':'span');action.className='expand-action';
-   action.textContent=project.link?'Ver projeto':'Projeto em preparação';
+   const action=document.createElement(project.link?'a':'button');action.className='expand-action';
+   action.textContent='Ver projeto';
    if(project.link){action.href=project.link;action.target='_blank';action.rel='noopener noreferrer';}
-   else action.setAttribute('aria-disabled','true');
+   else {action.type='button';action.disabled=true;action.title='Projeto demonstrativo: link disponível quando o trabalho real for publicado';}
    detail.append(desc,action);
    article.append(trigger,detail);
    trigger.addEventListener('click',()=>select(project.id));
