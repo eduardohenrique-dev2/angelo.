@@ -1,5 +1,7 @@
 import './style.css';
 import './menu.css';
+import './marketing.css';
+import { initPortfolio } from './portfolio.js';
 import { initMenu } from './menu.js';
 const theme = document.querySelector('#theme');
 const icon = (name) => '<i class="bi bi-' + name + '" aria-hidden="true"></i>';
@@ -8,7 +10,7 @@ const saveTheme=v=>{try{localStorage.setItem('angelo-theme',v)}catch{}};
 function setTheme(value){const light=value==='light';document.documentElement.classList.toggle('theme-prelight',light);document.documentElement.style.colorScheme=light?'light':'dark';document.body.classList.toggle('light',light);document.querySelectorAll('.brand img').forEach(img=>{img.src=light?'/logo-light.svg':'/logo.svg'});theme.setAttribute('aria-label',light?'Ativar tema escuro':'Ativar tema claro');theme.innerHTML=icon(light?'moon-stars':'sun');document.querySelector('meta[name="theme-color"]').content=light?'#f6f8ff':'#10172d';}
 setTheme(getTheme()==='light'?'light':'dark');
 initMenu();theme.addEventListener('click',()=>{const next=document.body.classList.contains('light')?'dark':'light';setTheme(next);saveTheme(next);});
-const filters=[...document.querySelectorAll('[data-filter]')],projects=[...document.querySelectorAll('[data-category]')];filters.forEach(btn=>btn.addEventListener('click',()=>{const value=btn.dataset.filter;filters.forEach(b=>{const selected=b===btn;b.classList.toggle('active',selected);b.setAttribute('aria-pressed',String(selected));});let found=0;projects.forEach(card=>{card.hidden=value!=='all'&&card.dataset.category!==value;if(!card.hidden)found++;});document.querySelector('#project-empty').hidden=found>0;}));
+initPortfolio();
 document.querySelector('#year').textContent=new Date().getFullYear();
 if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const obs=new IntersectionObserver(entries=>entries.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}}),{threshold:.05});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
 addEventListener('scroll',()=>{const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('#progress').style.transform='scaleX('+(max>0?scrollY/max:0)+')';},{passive:true});
