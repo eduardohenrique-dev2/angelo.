@@ -2,6 +2,7 @@ import {initFloatingActions} from './floating-actions.js';
 import {initPortfolio} from './portfolio.js';
 import {initMenu} from './menu.js';
 import {initScrollExperience} from './scroll.js';
+import {initIntro} from './intro.js';
 const theme = document.querySelector('#theme');
 const icon = (name) => name === 'sun'
   ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>'
@@ -13,10 +14,23 @@ setTheme(getTheme()==='light'?'light':'dark');
 initMenu();theme.addEventListener('click',()=>{const next=document.body.classList.contains('light')?'dark':'light';setTheme(next);saveTheme(next);});
 initPortfolio();
 document.querySelector('#year').textContent=new Date().getFullYear();
-// Motion é opcional: aguarda as bibliotecas defer sem bloquear o restante do site.
-if(window.gsap && window.ScrollTrigger) initScrollExperience();
-else window.addEventListener('load',initScrollExperience,{once:true});
+// Intro primeiro: as animações de scroll e do hero só iniciam após intro:done.
+let motionStarted=false;
+function startMotionAfterIntro(){
+  if(motionStarted)return;
+  motionStarted=true;
+  if(window.gsap && window.ScrollTrigger){
+    initScrollExperience();
+  }else if(document.readyState==='complete'){
+    // Fallback nativo se a CDN não estiver disponível.
+    initScrollExperience();
+  }else{
+    window.addEventListener('load',initScrollExperience,{once:true});
+  }
+}
+window.addEventListener('intro:done',startMotionAfterIntro);
 initFloatingActions();
+initIntro();
 
 /* V6: quote builder (client-side only, no personal data collected) */
 const quoteForm=document.querySelector('#quote-form');
