@@ -40,4 +40,5 @@ body.menu-open .floating-actions,body.lightbox-open .floating-actions{visibility
 @media(max-width:767px){.floating-actions .fab-tooltip{display:none}}
 @media(prefers-reduced-motion:reduce){
  .floating-actions > :is(.floating-top,.floating-whatsapp),.floating-actions .fab-tooltip{transition:opacity .15s linear;transform:none!important;animation:none!important}
+ .floating-actions .floating-top:not([hidden]){animation:none!important}
 }
