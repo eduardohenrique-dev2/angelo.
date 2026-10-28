@@ -33,6 +33,7 @@ export function initMenu() {
     document.body.style.removeProperty('right');
     document.body.style.removeProperty('width');
     window.scrollTo({top:scrollYBeforeOpen, behavior:'instant'});
+    window.angeloLenis?.start();
   }
 
   function close({target=null, restoreFocus=true}={}) {
@@ -53,7 +54,8 @@ export function initMenu() {
       requestAnimationFrame(() => {
         const offset=header.getBoundingClientRect().height+8;
         const top=target.getBoundingClientRect().top+window.scrollY-offset;
-        window.scrollTo({top,behavior:reduceMotion.matches?'instant':'smooth'});
+        if(window.angeloScrollTo)window.angeloScrollTo(target,-offset);
+        else window.scrollTo({top,behavior:reduceMotion.matches?'instant':'smooth'});
       });
     }
   }
@@ -65,6 +67,7 @@ export function initMenu() {
     scrollYBeforeOpen=window.scrollY;
     opener=document.activeElement instanceof HTMLElement?document.activeElement:button;
     dialog.style.setProperty('--menu-header-height',header.getBoundingClientRect().height+'px');
+    window.angeloLenis?.stop();
     document.body.style.position='fixed';
     document.body.style.top=-scrollYBeforeOpen+'px';
     document.body.style.left='0';
