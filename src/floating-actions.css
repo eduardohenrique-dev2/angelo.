@@ -1,181 +1,43 @@
-/* Angelo Studio | Floating actions — fonte única de estilos */
-:root {
-  --fab-size: 60px;
-  --fab-blue: #4D6BFF;
-  --fab-navy: #12204F;
-  --fab-gap: 12px;
-  --fab-ease: cubic-bezier(.22,.61,.36,1);
+/* Apenas os dois atalhos flutuantes, sem regras duplicadas. */
+:root{--fab-size:48px;--fab-gap:10px;--fab-navy:#12204f}
+.floating-actions{
+ position:fixed;z-index:45;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));
+ width:var(--fab-size);display:flex;flex-direction:column;align-items:center;gap:var(--fab-gap);
+ isolation:isolate;
 }
-.floating-actions {
-  position: fixed;
-  z-index: 45;
-  right: 16px;
-  bottom: calc(16px + env(safe-area-inset-bottom));
-  width: var(--fab-size);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--fab-gap);
-  overflow: visible;
-  isolation: isolate;
+.floating-actions > :is(.floating-top,.floating-whatsapp){
+ box-sizing:border-box;position:relative;display:grid;place-items:center;flex:none;
+ width:var(--fab-size);height:var(--fab-size);min-width:48px;min-height:48px;
+ padding:0;margin:0;border:1px solid rgba(198,211,255,.42);border-radius:50%;
+ color:#fff;background:var(--fab-navy);cursor:pointer;text-decoration:none;
+ box-shadow:0 7px 17px rgba(5,13,36,.2);
+ line-height:0;transition:transform .18s ease,box-shadow .18s ease,opacity .18s ease;
 }
-.floating-actions > :is(.floating-top,.floating-whatsapp) {
-  position: relative;
-  box-sizing: border-box;
-  display: grid;
-  place-items: center;
-  width: var(--fab-size);
-  height: var(--fab-size);
-  min-width: var(--fab-size);
-  min-height: var(--fab-size);
-  padding: 0;
-  margin: 0;
-  border: 1px solid rgba(255,255,255,.25);
-  border-radius: 50%;
-  color: #fff;
-  cursor: pointer;
-  isolation: isolate;
-  text-decoration: none;
-  line-height: 0;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 220ms ease, box-shadow 220ms ease, opacity 160ms ease;
+.floating-actions .floating-icon{position:relative;z-index:2;display:block;width:23px;height:23px;min-width:23px;min-height:23px;margin:0;pointer-events:none}
+.floating-actions .floating-top[hidden]{display:none}
+.floating-actions .floating-top:not([hidden]){animation:fab-show .22s ease-out both}
+.floating-actions .floating-top.is-hiding{opacity:0;transform:translateY(10px);pointer-events:none}
+@keyframes fab-show{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.floating-progress{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);display:block;overflow:visible;pointer-events:none}
+.floating-progress circle{fill:none;stroke-width:2}
+.floating-progress-track{stroke:rgba(255,255,255,.12)}
+.floating-progress-value{stroke:#a0b9ff;stroke-linecap:round;stroke-dasharray:169.646;stroke-dashoffset:169.646}
+.floating-actions .fab-tooltip{
+ position:absolute;right:calc(100% + 10px);top:50%;
+ padding:8px 12px;border-radius:7px;white-space:nowrap;pointer-events:none;
+ background:#142347;color:#fff;font:700 13px/1.3 'DM Sans',sans-serif;
+ box-shadow:0 6px 16px rgba(0,0,0,.15);
+ opacity:0;visibility:hidden;transform:translate(8px,-50%);
+ transition:opacity .2s,transform .2s,visibility .2s
 }
-.floating-top {
-  background: linear-gradient(145deg,#12204F,#0B1535);
-  box-shadow: 0 8px 24px rgba(11,21,53,.3),0 2px 6px rgba(5,10,30,.25);
+.floating-actions > :is(.floating-top,.floating-whatsapp):focus-visible{outline:3px solid #819eff;outline-offset:3px}
+body:not(.light) .floating-actions > :is(.floating-top,.floating-whatsapp){border-color:rgba(199,213,255,.52)}
+body.menu-open .floating-actions,body.lightbox-open .floating-actions{visibility:hidden;pointer-events:none}
+@media(hover:hover) and (pointer:fine){
+ .floating-actions > :is(.floating-top,.floating-whatsapp):hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(12,24,56,.3)}
+ .floating-actions > :is(.floating-top,.floating-whatsapp):is(:hover,:focus-visible) .fab-tooltip{opacity:1;visibility:visible;transform:translate(0,-50%)}
 }
-.floating-whatsapp {
-  background: linear-gradient(145deg,#4D6BFF,#2B45E0);
-  box-shadow: 0 8px 24px rgba(43,69,224,.35),0 2px 6px rgba(5,10,30,.25);
-}
-.floating-actions .fab-tooltip {
- position:absolute;right:calc(100% + 13px);top:50%;z-index:10;display:block;pointer-events:none;
- width:max-content;max-width:220px;padding:9px 12px;border-radius:9px;
- background:#12204f;color:#fff;font:600 13px/1.2 'DM Sans',sans-serif;
- white-space:nowrap;opacity:0;visibility:hidden;transform:translate(8px,-50%);
- transition:opacity 170ms ease,transform 170ms ease,visibility 170ms;
- box-shadow:0 5px 14px rgba(0,0,0,.2)
-}
-.floating-actions .floating-icon {
-  position: relative;
-  z-index: 3;
-  display: block;
-  flex: none;
-  width: 24px;
-  height: 24px;
-  margin: 0;
-  padding: 0;
-  line-height: 0;
-  pointer-events: none;
-  transform-origin: center;
-  transition: transform 200ms ease;
-}
-/* Reflexo no topo sem disputar ::before/::after usados pelos anéis.
-   O brilho está no background do próprio botão, sob o SVG. */
-.floating-actions > .floating-top {
-  background-image: linear-gradient(180deg,rgba(255,255,255,.18),transparent 45%),linear-gradient(145deg,#12204F,#0B1535);
-}
-.floating-actions > .floating-whatsapp {
-  background-image: linear-gradient(180deg,rgba(255,255,255,.18),transparent 45%),linear-gradient(145deg,#4D6BFF,#2B45E0);
-}
-/* Dois anéis independentes, exatamente 1.2s de defasagem. */
-.floating-whatsapp::before,
-.floating-whatsapp::after {
-  content: "";
-  position: absolute;
-  inset: -1px;
-  z-index: -1;
-  border: 2px solid rgba(77,107,255,.85);
-  border-radius: 50%;
-  pointer-events: none;
-  opacity: 0;
-  transform: scale(1);
-  animation: fab-ripple 2.4s cubic-bezier(.22,.61,.36,1) infinite;
-}
-.floating-whatsapp::after { animation-delay: 1.2s; }
-.floating-whatsapp .floating-icon { animation: fab-breathe-icon 3s ease-in-out infinite; }
-.floating-whatsapp { animation: fab-enter .4s cubic-bezier(.2,1.3,.3,1) both, fab-breathe 3s ease-in-out .4s infinite; }
-@keyframes fab-ripple {
-  0% {transform: scale(1);opacity:.45}
-  95%,100% {transform: scale(1.7);opacity:0}
-}
-@keyframes fab-breathe-icon {
-  0%,100% {transform:scale(1)}
-  50% {transform:scale(1.04)}
-}
-@keyframes fab-breathe {0%,100%{transform:scale(1)}50%{transform:scale(1.04)}}
-@keyframes fab-enter {
-  from {opacity:0;transform:scale(.6)}
-  to {opacity:1;transform:scale(1)}
-}
-.floating-top[hidden] {display: none !important;}
-.floating-top:not([hidden]) { animation: fab-top-enter .22s cubic-bezier(.32,.72,0,1) both; }
-.floating-top.is-hiding {opacity:0;transform:translateY(12px);pointer-events:none;}
-@keyframes fab-top-enter {
-  from {opacity:0;transform:translateY(12px)}
-  to {opacity:1;transform:translateY(0)}
-}
-.floating-progress {
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  display:block;
-  overflow:visible;
-  transform:rotate(-90deg);
-  pointer-events:none;
-}
-.floating-progress circle {fill:none;stroke-width:2;}
-.floating-progress-track {stroke:rgba(255,255,255,.19);}
-.floating-progress-value {
-  stroke:#9AB7FF;
-  stroke-linecap:round;
-  stroke-dasharray:169.646;
-  stroke-dashoffset:169.646;
-  transition:none;
-}
-.floating-actions > :is(.floating-top,.floating-whatsapp):focus-visible {
-  outline:3px solid #7694FF;
-  outline-offset:3px;
-}
-.floating-actions > :is(.floating-top,.floating-whatsapp):active {
-  transform:scale(.94);
-  transition-duration:120ms;
-}
-@media(hover:hover) and (pointer:fine) {
-  .floating-actions > :is(.floating-top,.floating-whatsapp):hover {
-    transform:scale(1.08);
-    box-shadow:0 12px 32px rgba(43,69,224,.48),0 3px 8px rgba(5,10,30,.3);
-  }
-  .floating-whatsapp:hover::before,.floating-whatsapp:hover::after {animation-play-state:paused;}
-  .floating-whatsapp:hover .floating-icon {animation-play-state:paused;transform:rotate(-8deg);}
-  .floating-actions > .floating-whatsapp:hover {animation:none!important;transform:scale(1.08)!important}
-  .floating-actions > :is(.floating-top,.floating-whatsapp):is(:hover,:focus-visible) .fab-tooltip {
-    opacity:1;transform:translate(0,-50%);visibility:visible;
-  }
-}
-body:not(.light) .floating-whatsapp {
-  box-shadow:0 8px 29px rgba(62,100,255,.53),0 2px 6px rgba(5,10,30,.35);
-}
-body:not(.light) .floating-top {border-color:rgba(194,209,255,.42);}
-body.menu-open .floating-actions,
-body.lightbox-open .floating-actions {
-  visibility:hidden;
-  pointer-events:none;
-}
-@media(hover:none), (pointer:coarse){.floating-actions .fab-tooltip{display:none}}
-@media(max-width:767px) {
-  :root {--fab-size:56px}
-}
-@media(prefers-reduced-motion:reduce) {
-  .floating-actions .fab-tooltip{transition:none!important}
-  .floating-whatsapp,.floating-whatsapp .floating-icon,
-  .floating-whatsapp::before,.floating-whatsapp::after {animation:none!important;}
-  .floating-actions > :is(.floating-top,.floating-whatsapp) {
-    transition:opacity 150ms linear!important;
-  }
-  .floating-top:not([hidden]) {animation:fab-top-fade 150ms linear both;}
-  @keyframes fab-top-fade {from{opacity:0}to{opacity:1}}
-  .floating-actions > :is(.floating-top,.floating-whatsapp):hover,
-  .floating-actions > :is(.floating-top,.floating-whatsapp):active {transform:none!important}
+@media(max-width:767px){.floating-actions .fab-tooltip{display:none}}
+@media(prefers-reduced-motion:reduce){
+ .floating-actions > :is(.floating-top,.floating-whatsapp),.floating-actions .fab-tooltip{transition:opacity .15s linear;transform:none!important;animation:none!important}
 }
