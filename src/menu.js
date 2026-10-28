@@ -1,172 +1,128 @@
-// Angelo Studio — isolated full-screen menu controller (V8)
+// Menu minimalista Angelo Studio — preserva tema, âncoras e posição do scroll.
 export function initMenu() {
-  const trigger = document.getElementById('menu');
+  const button = document.getElementById('menu');
   const dialog = document.getElementById('mobile-nav');
-  const closeButton = document.getElementById('menu-close');
-  const backdrop = document.getElementById('menu-backdrop');
-  const themeButton = document.getElementById('menu-theme');
-  const headerTheme = document.getElementById('theme');
-  if (![trigger, dialog, closeButton, backdrop, themeButton].every(Boolean)) return;
+  const header = document.querySelector('.topbar');
+  const themeButton = document.getElementById('theme');
+  if (!button || !dialog || !header) return;
 
   const links = [...dialog.querySelectorAll('[data-menu-link]')];
-  const allLinks = [...dialog.querySelectorAll('a[href]')];
-  const sectionLinks = links.filter(link => link.hash && link.origin === location.origin);
-  const prefersReducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
-  const header = document.querySelector('.topbar');
-  let open = false;
-  let savedScroll = 0;
-  let previousFocus = null;
-  let closingTimer = 0;
+  const sectionLinks = links.filter(a => a.hash && a.origin === location.origin);
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const icon = (isOpen) => isOpen
+    ? '<svg class="menu-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 18 18M18 6 6 18"/></svg>'
+    : '<svg class="menu-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg>';
+  let isOpen = false;
+  let scrollYBeforeOpen = 0;
+  let opener = button;
+  let closeTimer;
 
-  function setIcon(button, name) {
-    button.innerHTML = '<i class="bi bi-' + name + '" aria-hidden="true"></i>';
-  }
-  function syncThemeButton() {
-    const light = document.body.classList.contains('light');
-    themeButton.setAttribute('aria-label', light ? 'Ativar tema escuro' : 'Ativar tema claro');
-    setIcon(themeButton, light ? 'moon-stars' : 'sun');
-  }
-  syncThemeButton();
-  themeButton.addEventListener('click', () => {
-    headerTheme?.click();
-    syncThemeButton();
-  });
-
-  function restoreScroll() {
-    document.body.style.position = '';
-    document.body.style.top = '';
-    document.body.style.left = '';
-    document.body.style.right = '';
-    document.body.style.width = '';
-    window.scrollTo({ top: savedScroll, behavior: 'instant' });
+  function setActive(sectionId) {
+    sectionLinks.forEach(link => {
+      const current = link.hash === '#' + sectionId;
+      link.classList.toggle('is-active', current);
+      if (current) link.setAttribute('aria-current', 'page');
+      else link.removeAttribute('aria-current');
+    });
   }
 
-  function closeMenu({ restoreFocus = true, target = null } = {}) {
-    if (!open) return;
-    open = false;
+  function scrollUnlock() {
+    document.body.style.removeProperty('position');
+    document.body.style.removeProperty('top');
+    document.body.style.removeProperty('left');
+    document.body.style.removeProperty('right');
+    document.body.style.removeProperty('width');
+    window.scrollTo({top:scrollYBeforeOpen, behavior:'instant'});
+  }
+
+  function close({target=null, restoreFocus=true}={}) {
+    if (!isOpen) return;
+    isOpen = false;
     dialog.classList.remove('is-open');
     document.body.classList.remove('menu-open');
-    trigger.setAttribute('aria-expanded', 'false');
-    trigger.setAttribute('aria-label', 'Abrir menu');
-    setIcon(trigger, 'list');
-
-    dialog.inert = true;
-    dialog.setAttribute('aria-hidden', 'true');
-    backdrop.setAttribute('aria-hidden', 'true');
-    restoreScroll();
-
-    if (restoreFocus) (previousFocus?.isConnected ? previousFocus : trigger).focus({ preventScroll: true });
-    const duration = prefersReducedMotion.matches ? 0 : 260;
-    clearTimeout(closingTimer);
-    closingTimer = window.setTimeout(() => {
-      if (!open) dialog.classList.remove('is-visible');
-    }, duration);
-
+    button.setAttribute('aria-expanded','false');
+    button.setAttribute('aria-label','Abrir menu');
+    button.innerHTML=icon(false);
+    dialog.setAttribute('aria-hidden','true');
+    dialog.inert=true;
+    scrollUnlock();
+    if (restoreFocus) opener.focus({preventScroll:true});
+    clearTimeout(closeTimer);
+    closeTimer=setTimeout(() => dialog.classList.remove('is-visible'),reduceMotion.matches?160:170);
     if (target) {
       requestAnimationFrame(() => {
-        const offset = (header?.getBoundingClientRect().height || 72) + 10;
-        const top = target.getBoundingClientRect().top + window.scrollY - offset;
-        window.scrollTo({ top, behavior: prefersReducedMotion.matches ? 'instant' : 'smooth' });
+        const offset=header.getBoundingClientRect().height+8;
+        const top=target.getBoundingClientRect().top+window.scrollY-offset;
+        window.scrollTo({top,behavior:reduceMotion.matches?'instant':'smooth'});
       });
     }
   }
 
-  function openMenu() {
-    if (open) return;
-    clearTimeout(closingTimer);
-    savedScroll = window.scrollY;
-    previousFocus = document.activeElement;
-    const rect = trigger.getBoundingClientRect();
-    dialog.style.setProperty('--reveal-x', rect.left + rect.width / 2 + 'px');
-    dialog.style.setProperty('--reveal-y', rect.top + rect.height / 2 + 'px');
-    dialog.style.setProperty('--menu-header-height', (header?.getBoundingClientRect().height || 72) + 'px');
-    document.body.style.position = 'fixed';
-    document.body.style.top = -savedScroll + 'px';
-    document.body.style.left = '0';
-    document.body.style.right = '0';
-    document.body.style.width = '100%';
+  function open() {
+    if (isOpen) return;
+    clearTimeout(closeTimer);
+    isOpen=true;
+    scrollYBeforeOpen=window.scrollY;
+    opener=document.activeElement instanceof HTMLElement?document.activeElement:button;
+    dialog.style.setProperty('--menu-header-height',header.getBoundingClientRect().height+'px');
+    document.body.style.position='fixed';
+    document.body.style.top=-scrollYBeforeOpen+'px';
+    document.body.style.left='0';
+    document.body.style.right='0';
+    document.body.style.width='100%';
     document.body.classList.add('menu-open');
-
-    open = true;
-    trigger.setAttribute('aria-expanded', 'true');
-    trigger.setAttribute('aria-label', 'Fechar menu');
-    setIcon(trigger, 'x-lg');
-    dialog.inert = false;
+    dialog.inert=false;
     dialog.removeAttribute('aria-hidden');
-    backdrop.setAttribute('aria-hidden', 'false');
     dialog.classList.add('is-visible');
-    syncThemeButton();
+    button.setAttribute('aria-expanded','true');
+    button.setAttribute('aria-label','Fechar menu');
+    button.innerHTML=icon(true);
     requestAnimationFrame(() => dialog.classList.add('is-open'));
-    closeButton.focus({ preventScroll: true });
+    links[0]?.focus({preventScroll:true});
   }
 
-  trigger.addEventListener('click', () => open ? closeMenu({ restoreFocus: true }) : openMenu());
-  closeButton.addEventListener('click', () => closeMenu({ restoreFocus: true }));
-  backdrop.addEventListener('click', () => closeMenu({ restoreFocus: true }));
+  button.addEventListener('click', () => isOpen?close():open());
   dialog.addEventListener('click', event => {
-    if (!event.target.closest('a, button, .menu-topbar, .menu-caption, .menu-links, .menu-bottom')) {
-      closeMenu({ restoreFocus: true });
-    }
+    if (event.target===dialog || event.target.classList.contains('menu-scroll') && !event.target.closest('a')) close();
   });
-  allLinks.forEach(link => link.addEventListener('click', event => {
-    if (link.hash && link.origin === location.origin) {
-      const target = document.getElementById(decodeURIComponent(link.hash.slice(1)));
-      if (target) {
-        event.preventDefault();
-        history.pushState(null, '', link.hash);
-        setActive(target.id);
-        closeMenu({ restoreFocus: true, target });
-        return;
+  links.forEach((link,index) => {
+    link.style.setProperty('--stagger-index',index);
+    link.addEventListener('click',event => {
+      if (link.hash && link.origin === location.origin) {
+        const target=document.getElementById(decodeURIComponent(link.hash.slice(1)));
+        if (target) {
+          event.preventDefault();
+          history.pushState(null,'',link.hash);
+          setActive(target.id);
+          close({target});
+          return;
+        }
       }
+      close();
+    });
+  });
+  document.addEventListener('keydown',event => {
+    if (!isOpen) return;
+    if (event.key==='Escape') {
+      event.preventDefault();close();return;
     }
-    closeMenu({ restoreFocus: true });
-  }));
-  dialog.addEventListener('keydown', event => {
-    if (!open) return;
-    if (event.key === 'Escape') {
-      event.preventDefault();
-      closeMenu({ restoreFocus: true });
-      return;
-    }
-    if (event.key !== 'Tab') return;
-    const focusable = [...dialog.querySelectorAll('a[href], button:not([disabled])')].filter(el => el.getClientRects().length);
-    if (!focusable.length) return;
-    const first = focusable[0];
-    const last = focusable[focusable.length - 1];
-    if (event.shiftKey && document.activeElement === first) {
-      event.preventDefault();
-      last.focus();
-    } else if (!event.shiftKey && document.activeElement === last) {
-      event.preventDefault();
-      first.focus();
-    }
+    if (event.key!=='Tab') return;
+    const focusable=[...dialog.querySelectorAll('a[href]'),themeButton,button].filter(Boolean).filter(el=>!el.disabled);
+    const first=focusable[0],last=focusable.at(-1);
+    if (event.shiftKey && document.activeElement===first) {event.preventDefault();last.focus();}
+    else if (!event.shiftKey && document.activeElement===last) {event.preventDefault();first.focus();}
   });
 
-  function setActive(id) {
-    for (const link of sectionLinks) {
-      const isActive = link.hash === '#' + id;
-      link.classList.toggle('is-active', isActive);
-      if (isActive) link.setAttribute('aria-current', 'page');
-      else link.removeAttribute('aria-current');
-    }
-  }
-  const sections = sectionLinks.map(link => document.getElementById(link.hash.slice(1))).filter(Boolean);
+  const sections=sectionLinks.map(link=>document.getElementById(link.hash.slice(1))).filter(Boolean);
   if ('IntersectionObserver' in window) {
-    const observer = new IntersectionObserver(entries => {
-      if (open) return;
-      const candidates = entries.filter(entry => entry.isIntersecting);
-      if (candidates.length) {
-        candidates.sort((a, b) => Math.abs(a.boundingClientRect.top) - Math.abs(b.boundingClientRect.top));
-        setActive(candidates[0].target.id);
-      }
-    }, { rootMargin: '-18% 0px -55% 0px', threshold: 0 });
-    sections.forEach(section => observer.observe(section));
+    const observer=new IntersectionObserver(entries=>{
+      if (isOpen) return;
+      const visible=entries.filter(e=>e.isIntersecting).sort((a,b)=>Math.abs(a.boundingClientRect.top)-Math.abs(b.boundingClientRect.top));
+      if (visible[0]) setActive(visible[0].target.id);
+    },{rootMargin:'-18% 0px -55% 0px',threshold:0});
+    sections.forEach(section=>observer.observe(section));
   }
-  setActive(location.hash.slice(1) || 'inicio');
-  addEventListener('hashchange', () => {
-    if (sectionLinks.some(link => link.hash === location.hash)) setActive(location.hash.slice(1));
-  });
-  addEventListener('pagehide', () => {
-    if (open) closeMenu({ restoreFocus: false });
-  });
+  setActive(sectionLinks.some(link=>link.hash===location.hash)?location.hash.slice(1):'inicio');
+  window.addEventListener('hashchange',()=>{if(sectionLinks.some(link=>link.hash===location.hash))setActive(location.hash.slice(1))});
+  window.addEventListener('pagehide',()=>{if(isOpen)close({restoreFocus:false})});
 }
