@@ -13,7 +13,7 @@
   --radius:20px;--header-height:76px;
 }
 html.theme-prelight{color-scheme:light;background:#f6f8ff}
-body.light{
+body.light,html.theme-prelight body{
   color-scheme:light;--bg:#f6f8ff;--bg-alt:#fff;
   --surface:#fff;--surface2:#eef2fc;--text:#111c34;--muted:#485875;--line:#ccd5e7;
   --shadow:0 18px 55px rgba(26,40,88,.09)
