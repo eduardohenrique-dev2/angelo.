@@ -16,7 +16,7 @@
 .floating-actions .floating-icon{position:relative;z-index:2;display:block;width:23px;height:23px;min-width:23px;min-height:23px;margin:0;pointer-events:none}
 .floating-actions .floating-top[hidden]{display:none}
 .floating-actions .floating-top:not([hidden]){animation:fab-show .22s ease-out both}
-.floating-actions .floating-top.is-hiding{opacity:0;transform:translateY(10px);pointer-events:none}
+.floating-actions .floating-top.is-hiding{animation:none!important;opacity:0;transform:translateY(10px);pointer-events:none}
 @keyframes fab-show{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 .floating-progress{position:absolute;inset:0;width:100%;height:100%;transform:rotate(-90deg);display:block;overflow:visible;pointer-events:none}
 .floating-progress circle{fill:none;stroke-width:2}
@@ -37,7 +37,11 @@ body.menu-open .floating-actions,body.lightbox-open .floating-actions{visibility
  .floating-actions > :is(.floating-top,.floating-whatsapp):hover{transform:translateY(-2px);box-shadow:0 10px 22px rgba(12,24,56,.3)}
  .floating-actions > :is(.floating-top,.floating-whatsapp):is(:hover,:focus-visible) .fab-tooltip{opacity:1;visibility:visible;transform:translate(0,-50%)}
 }
-@media(max-width:767px){.floating-actions .fab-tooltip{display:none}}
+@media(max-width:767px){
+ .floating-actions .fab-tooltip{display:none}
+ .floating-actions{right:16px;bottom:calc(16px + env(safe-area-inset-bottom));}
+ .floating-actions .floating-top:not([hidden]){display:grid}
+}
 @media(prefers-reduced-motion:reduce){
  .floating-actions > :is(.floating-top,.floating-whatsapp),.floating-actions .fab-tooltip{transition:opacity .15s linear;transform:none!important;animation:none!important}
  .floating-actions .floating-top:not([hidden]){animation:none!important}
