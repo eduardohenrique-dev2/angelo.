@@ -1,13 +1,14 @@
-import './style.css';
+import './site.css';
 import './menu.css';
-import './marketing.css';
-import './studio-v9.css';
 import './floating-actions.css';
-import { initFloatingActions } from './floating-actions.js';
-import { initPortfolio } from './portfolio.js';
-import { initMenu } from './menu.js';
+import {initFloatingActions} from './floating-actions.js';
+import {initPortfolio} from './portfolio.js';
+import {initMenu} from './menu.js';
+import {initScrollExperience} from './scroll.js';
 const theme = document.querySelector('#theme');
-const icon = (name) => '<i class="bi bi-' + name + '" aria-hidden="true"></i>';
+const icon = (name) => name === 'sun'
+  ? '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>'
+  : '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.5 14A8.5 8.5 0 0 1 10 3.5 8.5 8.5 0 1 0 20.5 14Z"/></svg>';
 const getTheme=()=>{try{return localStorage.getItem('angelo-theme')}catch{return null}};
 const saveTheme=v=>{try{localStorage.setItem('angelo-theme',v)}catch{}};
 function setTheme(value){const light=value==='light';document.documentElement.classList.toggle('theme-prelight',light);document.documentElement.style.colorScheme=light?'light':'dark';document.body.classList.toggle('light',light);document.querySelectorAll('.brand img').forEach(img=>{img.src=light?'/logo-light.svg':'/logo.svg'});theme.setAttribute('aria-label',light?'Ativar tema escuro':'Ativar tema claro');theme.innerHTML=icon(light?'moon-stars':'sun');document.querySelector('meta[name="theme-color"]').content=light?'#f6f8ff':'#10172d';}
@@ -15,10 +16,7 @@ setTheme(getTheme()==='light'?'light':'dark');
 initMenu();theme.addEventListener('click',()=>{const next=document.body.classList.contains('light')?'dark':'light';setTheme(next);saveTheme(next);});
 initPortfolio();
 document.querySelector('#year').textContent=new Date().getFullYear();
-if('IntersectionObserver' in window&&!matchMedia('(prefers-reduced-motion: reduce)').matches){const obs=new IntersectionObserver(entries=>entries.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target);}}),{threshold:.05});document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));}else document.querySelectorAll('.reveal').forEach(el=>el.classList.add('visible'));
-function updateScrollProgress(){const max=document.documentElement.scrollHeight-innerHeight;document.querySelector('#progress').style.transform='scaleX('+(max>0?scrollY/max:0)+')';}
-addEventListener('scroll',updateScrollProgress,{passive:true});
-updateScrollProgress();
+initScrollExperience();
 initFloatingActions();
 
 /* V6: quote builder (client-side only, no personal data collected) */
@@ -53,10 +51,3 @@ if(quoteForm){
   window.setTimeout(()=>{submit.disabled=false;submit.classList.remove('is-loading');submit.removeAttribute('aria-busy');},1500);
  });
 }
-/* Magnetic pointer treatment: only fine pointers and reduced-motion off */
-const canMagnet=window.matchMedia('(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference)').matches;
-if(canMagnet){document.querySelectorAll('.hero-actions .button,.contact-button,.quote-submit').forEach(button=>{
- button.dataset.magnetic='';
- button.addEventListener('pointermove',event=>{const r=button.getBoundingClientRect();const dx=(event.clientX-r.left-r.width/2)*.075;const dy=(event.clientY-r.top-r.height/2)*.075;button.style.transform='translate3d('+dx+'px,'+dy+'px,0)';});
- button.addEventListener('pointerleave',()=>{button.style.transform='';});
-});}
