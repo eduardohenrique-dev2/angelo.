@@ -135,12 +135,9 @@ body.light .ticker{color:#fff!important}
 .footer-links{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;font-size:14px;font-weight:650}
 .footer-links a{min-height:32px}
 .footer-bottom{border-top:1px solid var(--line);padding-top:24px;grid-column:1/-1;display:flex;justify-content:space-between;flex-wrap:wrap;gap:15px;color:var(--muted);font-weight:650}
-.floating-whatsapp{position:fixed;z-index:40;right:20px;bottom:20px;display:flex;align-items:center;gap:9px;padding:12px 17px;min-height:48px;border-radius:50px;border:1px solid #5266a0;background:#142348;color:#fff;box-shadow:0 8px 32px #030b2466;font-size:13px;font-weight:750;transition:transform .2s,background .2s}
-.floating-whatsapp:hover{transform:translateY(-3px);background:#24459a}
-.floating-whatsapp i{font-size:19px}
 #project-empty:not([hidden]){display:block;padding:45px;text-align:center;border:1px dashed var(--line);border-radius:var(--radius);color:var(--muted)}
 @media(max-width:760px){.service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.service-card{min-height:310px;padding:18px;grid-template-rows:auto 90px auto}.service-card>div{min-height:115px}.service-card h3{font-size:17px}.service-card p{font-size:13px}.footer{grid-template-columns:1fr}.footer-bottom{grid-column:1}}
-@media(max-width:380px){.service-grid{grid-template-columns:1fr}.service-card{min-height:205px;grid-template-columns:1fr 90px;grid-template-rows:auto 1fr;align-items:center}.service-card svg{grid-row:1/3;grid-column:2}.service-card>div{grid-column:1;grid-row:2;min-height:0}.service-card h3{min-height:0}.floating-whatsapp span{display:none}.floating-whatsapp{width:50px;padding:0;justify-content:center}.hero-brand-composition{padding-inline:10px}}
+@media(max-width:380px){.service-grid{grid-template-columns:1fr}.service-card{min-height:205px;grid-template-columns:1fr 90px;grid-template-rows:auto 1fr;align-items:center}.service-card svg{grid-row:1/3;grid-column:2}.service-card>div{grid-column:1;grid-row:2;min-height:0}.service-card h3{min-height:0}.hero-brand-composition{padding-inline:10px}}
 
 /* Keep a balanced 2x2 service grid even at narrow 320px viewports. */
 @media(max-width:380px){
@@ -300,44 +297,4 @@ body.light .footer,body.light .topbar{border-color:#c9d4e7}
 }
 @media(prefers-reduced-motion:reduce){
  .hero-actions .hero-cta,.hero-actions .hero-cta-icon{transition:none!important;transform:none!important}
-}
-
-
-/* Shared floating quick actions — back to top + WhatsApp */
-.floating-actions{
- position:fixed;z-index:40;right:clamp(12px,2vw,24px);
- bottom:calc(16px + env(safe-area-inset-bottom));
- display:flex;flex-direction:column;align-items:stretch;gap:10px;
- width:max-content;max-width:calc(100vw - 24px);
-}
-.floating-actions .floating-top,
-.floating-actions .floating-whatsapp{
- position:static;right:auto;bottom:auto;z-index:auto;
- display:flex;align-items:center;justify-content:flex-start;gap:10px;
- min-height:52px;width:100%;padding:12px 19px;border:1px solid #5266a0;
- border-radius:999px;background:#142348;color:#fff!important;
- box-shadow:0 8px 26px rgba(3,11,36,.28);
- text-decoration:none;font:750 14px/1.3 'DM Sans',sans-serif;
- white-space:nowrap;transition:transform .2s ease,background .2s ease,box-shadow .2s ease;
-}
-.floating-actions .floating-top i,
-.floating-actions .floating-whatsapp i{font-size:21px;line-height:1;flex:none}
-.floating-actions .floating-top:hover,
-.floating-actions .floating-whatsapp:hover{
- background:#24459a;transform:translateY(-2px);
- box-shadow:0 11px 30px rgba(3,11,36,.35);
-}
-.floating-actions .floating-top:active,
-.floating-actions .floating-whatsapp:active{transform:scale(.98)}
-.floating-actions :is(.floating-top,.floating-whatsapp):focus-visible{
- outline:3px solid #96b2ff;outline-offset:4px;
-}
-body.menu-open .floating-actions{visibility:hidden;pointer-events:none}
-@media(max-width:380px){
- .floating-actions .floating-top,
- .floating-actions .floating-whatsapp{min-height:48px;padding:10px 13px;font-size:12px}
- .floating-actions :is(.floating-top,.floating-whatsapp) span{display:inline!important}
-}
-@media(prefers-reduced-motion:reduce){
- .floating-actions .floating-top,.floating-actions .floating-whatsapp{transition:none!important;transform:none!important}
 }
