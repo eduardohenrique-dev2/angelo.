@@ -114,6 +114,37 @@ html.js #site-intro.is-complete{display:none!important}
   <div class="intro-blue-wipe" aria-hidden="true"></div>
   <button class="intro-skip" type="button">Pular</button>
 </div>
+<script id="intro-early-controls">
+/* Pular e ESC continuam funcionando em 3G, antes dos módulos defer. */
+(function(){
+  var overlay=document.getElementById('site-intro');
+  var button=overlay&&overlay.querySelector('.intro-skip');
+  if(!overlay||!button)return;
+  function detach(){
+    button.removeEventListener('click',skip);
+    window.removeEventListener('keydown',onKey,true);
+  }
+  function skip(event){
+    if(event){event.preventDefault();event.stopPropagation();}
+    if(typeof window.angeloIntroSkip==='function'){
+      detach();
+      window.angeloIntroSkip();
+      return;
+    }
+    detach();
+    window.__angeloIntroCompleted=true;
+    overlay.setAttribute('aria-hidden','true');
+    overlay.remove();
+    document.documentElement.classList.remove('intro-locked');
+    document.body.classList.remove('intro-active');
+    window.dispatchEvent(new CustomEvent('intro:done',{detail:{skipped:true}}));
+  }
+  function onKey(event){if(event.key==='Escape')skip(event);}
+  button.addEventListener('click',skip);
+  window.addEventListener('keydown',onKey,true);
+  window.__angeloIntroBootCleanup=detach;
+})();
+</script>
 <a class="skip" href="#content">Ir para conteúdo</a><div class="progress" id="progress"></div>
 <header class="topbar"><a href="#inicio" class="brand" aria-label="Angelo Studio — início"><img src="/logo.svg" alt="" width="33" height="38"/><span>angelo<span class="blue">.</span><small>STUDIO DIGITAL</small></span></a><div class="nav-actions"><button class="icon-button" id="theme" aria-label="Alternar tema"><svg viewBox="0 0 24 24"><path d="M12 3a9 9 0 1 0 9 9 7 7 0 0 1-9-9Z"/></svg></button><button id="menu" class="icon-button menu-button" aria-label="Abrir menu" aria-expanded="false" aria-controls="mobile-nav"><svg class="menu-glyph" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16M4 16h16"/></svg></button></div></header>
 <nav id="mobile-nav" class="mobile-nav" role="dialog" aria-modal="true" aria-label="Menu de navegação" aria-hidden="true" inert>
