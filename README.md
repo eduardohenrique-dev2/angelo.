@@ -183,3 +183,24 @@ git push origin main
 ```
 
 O portfólio preserva os filtros e a expansão. Imagens enviadas são apresentadas como artes gráficas, enquanto as categorias ainda sem materiais continuam marcadas como demonstração. Os links "Ver projeto" permanecem desativados até haver URLs fornecidas.
+
+
+## Revisão de conteúdo e galeria V9 — 28/10/2026
+
+**Equipe:** Raphael Angelo — Design & identidade visual; Eduardo — Desenvolvimento web & plataformas.
+
+**Identidade:** navy + azul elétrico e marca `angelo.` preservados. Conteúdo reorientado para design, marketing e desenvolvimento web.
+
+**Seções atualizadas:** hero, serviços (cinco), três dores, Sobre com dois profissionais, trabalhos com imagens fornecidas, briefing (seis opções), CTA, contato e SEO.
+
+**Galeria:** `src/portfolio.js` contém somente os sete WebP reais já adicionados a `public/projetos/`. Cada item contém `pos` para controlar `object-position`, com padrão `center top`. Filtros de categorias sem imagens ficam escondidos. No desktop, os cards verticais ficam juntos e expandem no hover; no celular começam fechados e abrem por toque, um de cada vez. O botão **Ampliar** abre um lightbox com fechamento por ESC, clique fora e foco preso. Quando houver uma URL real em `link`, o botão muda para **Ver projeto**.
+
+**Novos arquivos:** `src/studio-v9.css` é carregado por último, após `src/marketing.css`, para padronizar layout, galeria, rodapés de cards, botões flutuantes e lightbox.
+
+**Atalhos:** dois botões circulares de 48px; o de voltar ao topo aparece depois de 400px. A referência de WhatsApp preexistente foi preservada.
+
+**Como usar:** `git pull origin main`, `npm install`, `npm run build`, `npm run dev`.
+
+**Checklist:** testar 320px, 430px, 1440px e paisagem; Safari iOS e safe area; abrir/fechar galeria; teclado (Tab/Enter/Espaço), lightbox (ESC/foco/clique externo), filtros, modo claro/escuro, WhatsApp e barra de progresso.
+
+**Status:** testes estáticos de sintaxe e âncoras concluídos. O build e os testes em navegadores reais ainda precisam ser executados.
