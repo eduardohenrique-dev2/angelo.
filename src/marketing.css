@@ -66,3 +66,16 @@
  .expand-card .expand-detail{display:none}
  .expand-card.is-expanded .expand-detail{display:flex}
 }
+
+
+/* Portfolio with supplied artwork: two balanced rows at large widths */
+@media(min-width:1101px){
+ .expanding-gallery{flex-wrap:wrap;height:auto;overflow:visible;align-items:stretch}
+ .expand-card{flex:1 1 calc(20% - 12px);height:440px}
+ .expand-card.is-expanded{flex-grow:3.4}
+}
+.expand-trigger img{object-position:center top}
+.expand-card.is-expanded .expand-trigger img{object-fit:contain;object-position:center center;background:#18213d}
+@media(max-width:720px){
+ .expand-card.is-expanded .expand-trigger img{object-fit:contain}
+}
