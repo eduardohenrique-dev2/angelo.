@@ -1,6 +1,3 @@
-import './site.css';
-import './menu.css';
-import './floating-actions.css';
 import {initFloatingActions} from './floating-actions.js';
 import {initPortfolio} from './portfolio.js';
 import {initMenu} from './menu.js';
