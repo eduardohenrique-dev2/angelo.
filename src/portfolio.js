@@ -33,7 +33,7 @@ export function initPortfolio(){
   });
   if(scroll&&!hover.matches){
    const card=[...gallery.children].find(card=>card.dataset.id===id);
-   if(card)requestAnimationFrame(()=>{const top=card.getBoundingClientRect().top+window.scrollY-header()-12;window.scrollTo({top,behavior:motion.matches?'instant':'smooth'})});
+   if(card)requestAnimationFrame(()=>{const top=card.getBoundingClientRect().top+window.scrollY-header()-12;if(window.angeloScrollTo)window.angeloScrollTo(card,-header()-12);else window.scrollTo({top,behavior:motion.matches?'instant':'smooth'});});
   }
  }
  function showLightbox(project){
@@ -44,12 +44,14 @@ export function initPortfolio(){
   lightboxTitle.textContent=project.title;
   lightbox.hidden=false;
   document.body.classList.add('lightbox-open');
+  window.angeloLenis?.stop();
   lightboxClose.focus({preventScroll:true});
  }
  function closeLightbox(){
   if(lightbox.hidden)return;
   lightbox.hidden=true;
   document.body.classList.remove('lightbox-open');
+  window.angeloLenis?.start();
   lightboxImg.removeAttribute('src');
   previousFocus?.focus({preventScroll:true});
   window.scrollTo({top:scrollBefore,behavior:'instant'});
@@ -102,6 +104,7 @@ export function initPortfolio(){
    trigger.addEventListener('pointerenter',()=>{if(hover.matches)choose(project.id)});
    gallery.append(card);
   });
+  document.dispatchEvent(new CustomEvent('portfolio:updated'));
  }
  chips.filter(chip=>!chip.hidden).forEach(chip=>chip.addEventListener('click',()=>{
   filter=chip.dataset.filter;
