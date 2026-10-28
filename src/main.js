@@ -13,7 +13,9 @@ setTheme(getTheme()==='light'?'light':'dark');
 initMenu();theme.addEventListener('click',()=>{const next=document.body.classList.contains('light')?'dark':'light';setTheme(next);saveTheme(next);});
 initPortfolio();
 document.querySelector('#year').textContent=new Date().getFullYear();
-initScrollExperience();
+// Motion é opcional: aguarda as bibliotecas defer sem bloquear o restante do site.
+if(window.gsap && window.ScrollTrigger) initScrollExperience();
+else window.addEventListener('load',initScrollExperience,{once:true});
 initFloatingActions();
 
 /* V6: quote builder (client-side only, no personal data collected) */
