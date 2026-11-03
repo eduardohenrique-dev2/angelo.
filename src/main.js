@@ -44,6 +44,21 @@ let toastTimer;
 const showToast=(message)=>{toast.textContent=message;toast.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{toast.hidden=true},4500)};
 if(quoteForm){
  const fields=['service','budget','deadline'].map(name=>quoteForm.elements.namedItem(name));
+ // Valores de referência, não um orçamento automático.
+ const priceHint=document.getElementById('quote-service-price');
+ const priceGuidance={
+  'Vídeos curtos':'Valor de referência para edição de vídeo: R$ 50 a R$ 150, conforme a edição.',
+  'Identidade visual':'Valor de referência para identidade visual: R$ 90 a R$ 500, conforme o projeto.',
+  'Posts':'Valor sob consulta: depende da quantidade de posts e do que será produzido.'
+ };
+ const refreshPrice=()=>{
+  if(!priceHint)return;
+  const message=priceGuidance[quoteForm.elements.namedItem('service').value]||'';
+  priceHint.textContent=message;
+  priceHint.hidden=!message;
+ };
+ quoteForm.elements.namedItem('service').addEventListener('change',refreshPrice);
+ refreshPrice();
  fields.forEach(field=>{field.setAttribute('aria-invalid','false');field.addEventListener('change',()=>{field.setAttribute('aria-invalid','false');document.getElementById(field.id+'-error').textContent='';});});
  quoteForm.addEventListener('submit',event=>{
   event.preventDefault();
