@@ -44,20 +44,29 @@ let toastTimer;
 const showToast=(message)=>{toast.textContent=message;toast.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>{toast.hidden=true},4500)};
 if(quoteForm){
  const fields=['service','budget','deadline'].map(name=>quoteForm.elements.namedItem(name));
- // Valores de referência, não um orçamento automático.
+ // Valores de referência por serviço, não orçamento automático.
  const priceHint=document.getElementById('quote-service-price');
- const priceGuidance={
-  'Vídeos curtos':'Valor de referência para edição de vídeo: R$ 50 a R$ 150, conforme a edição.',
-  'Identidade visual':'Valor de referência para identidade visual: R$ 90 a R$ 500, conforme o projeto.',
-  'Posts':'Valor sob consulta: depende da quantidade de posts e do que será produzido.'
+ const serviceSelect=fields[0];
+ const budgetSelect=fields[1];
+ const defaultBudgetOptions=[...budgetSelect.options].map(option=>({value:option.value,label:option.textContent}));
+ const priceByService={
+  'Site/landing page':{hint:'Valor de referência para sites: R$ 300 a R$ 800, conforme o projeto.',options:[['R$ 300 a R$ 800','R$ 300 a R$ 800'],['Preciso de orientação','Preciso de orientação']]},
+  'Plataforma/sistema web':{hint:'Valor de referência para plataformas: R$ 300 a R$ 800, conforme o projeto.',options:[['R$ 300 a R$ 800','R$ 300 a R$ 800'],['Preciso de orientação','Preciso de orientação']]},
+  'Vídeos curtos':{hint:'Valor de referência para edição de vídeo: R$ 50 a R$ 150, conforme a edição.',options:[['R$ 50 a R$ 150','R$ 50 a R$ 150'],['Preciso de orientação','Preciso de orientação']]},
+  'Identidade visual':{hint:'Valor de referência para identidade visual: R$ 90 a R$ 500, conforme o projeto.',options:[['R$ 90 a R$ 500','R$ 90 a R$ 500'],['Preciso de orientação','Preciso de orientação']]},
+  'Posts':{hint:'Valor sob consulta: depende da quantidade de posts e do que será produzido.',options:[['Conforme a quantidade de posts','Conforme a quantidade de posts'],['Preciso de orientação','Preciso de orientação']]},
+  'Pacote completo':{hint:'Orçamento personalizado conforme os serviços escolhidos.',options:[['Orçamento personalizado','Orçamento personalizado'],['Preciso de orientação','Preciso de orientação']]}
  };
  const refreshPrice=()=>{
-  if(!priceHint)return;
-  const message=priceGuidance[quoteForm.elements.namedItem('service').value]||'';
-  priceHint.textContent=message;
-  priceHint.hidden=!message;
+  const pricing=priceByService[serviceSelect.value];
+  if(priceHint){priceHint.textContent=pricing?.hint||'';priceHint.hidden=!pricing;}
+  const options=pricing?.options||defaultBudgetOptions.map(option=>[option.value,option.label]).filter(option=>option[0]);
+  budgetSelect.replaceChildren(new Option('Selecione uma faixa',''),...options.map(([value,label])=>new Option(label,value)));
+  budgetSelect.value='';
+  budgetSelect.setAttribute('aria-invalid','false');
+  document.getElementById('quote-budget-error').textContent='';
  };
- quoteForm.elements.namedItem('service').addEventListener('change',refreshPrice);
+ serviceSelect.addEventListener('change',refreshPrice);
  refreshPrice();
  fields.forEach(field=>{field.setAttribute('aria-invalid','false');field.addEventListener('change',()=>{field.setAttribute('aria-invalid','false');document.getElementById(field.id+'-error').textContent='';});});
  quoteForm.addEventListener('submit',event=>{
