@@ -6,7 +6,8 @@ const projects=[
 {id:'post-calor',title:'Cuidados com pets no calor',type:'post',label:'Post',image:'/projetos/post-calorao-pets.webp',link:null,alt:'Arte sobre calor e cuidados com cães e gatos',pos:'center top'},
 {id:'post-kelvin',title:'Kelvin — Terceirão Amarelo',type:'post',label:'Post',image:'/projetos/post-kelvin-terceirao.webp',link:null,alt:'Arte esportiva com Kelvin e Terceirão Amarelo',pos:'center top'},
 {id:'post-basquete',title:'Elenco de basquete',type:'post',label:'Post',image:'/projetos/post-elenco-basquete.webp',link:null,alt:'Arte esportiva com bola de basquete e texto Elenco',pos:'center top'},
-{id:'post-futsal',title:'Elenco de futsal',type:'post',label:'Post',image:'/projetos/post-elenco-futsal.webp',link:null,alt:'Arte do elenco de futsal do Terceirão Amarelo',pos:'center top'}
+{id:'post-futsal',title:'Elenco de futsal',type:'post',label:'Post',image:'/projetos/post-elenco-futsal.webp',link:null,alt:'Arte do elenco de futsal do Terceirão Amarelo',pos:'center top'},
+{id:'identidade-angelo',title:'angelo. Studio Digital — Identidade Visual',type:'identity',label:'Identidade Visual',image:'/projetos/identidade-visual-angelo.webp',link:null,alt:'Apresentação da identidade visual angelo. Studio Digital: logotipo e símbolo A em azul, branco e azul-marinho, aplicações em cartões e composição de marca',pos:'center top'}
 ];
 export function initPortfolio(){
  const gallery=document.querySelector('#project-grid');
